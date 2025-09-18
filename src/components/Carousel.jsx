@@ -18,8 +18,7 @@ const Carousel = () => {
   const goToSlide = (index) => setCurrentIndex(index);
 
   return (
-    <div className="w-full h-[100vh] sm:h-[70vh] md:h-screen relative overflow-hidden">
-      {/* تصاویر */}
+    <div className="w-full h-[100vh] md:h-screen relative overflow-hidden bg-[#121212]">
       {images.map((img, index) => (
         <img
           key={index}
@@ -30,19 +29,25 @@ const Carousel = () => {
         />
       ))}
 
-      {/* دایره‌های پایین */}
-      <div className="absolute bottom-4 sm:bottom-6 md:bottom-10 left-1/2 transform -translate-x-1/2 flex space-x-2 md:space-x-4 z-20">
-        {images.map((_, index) => (
-          <button
-            key={index}
-            onClick={() => goToSlide(index)}
-            className={`w-3 h-3 md:w-4 md:h-4 rounded-full border-2 border-white transition-all duration-500 ease-in-out
-              ${index === currentIndex ? "w-5 h-5 md:w-6 md:h-6 bg-white shadow-lg" : "bg-transparent"}`}
-          ></button>
-        ))}
-      </div>
+      {/* دایره‌های پایین طلایی-دارک */}
+<div className="absolute bottom-4 md:bottom-8 left-1/2 transform -translate-x-1/2 flex space-x-2 z-20">
+  {images.map((_, index) => (
+    <button
+      key={index}
+      onClick={() => goToSlide(index)}
+      className={`rounded-full transition-all duration-300 ease-in-out
+        ${
+          index === currentIndex
+            ? "w-2.5 h-2.5 bg-[#FFD700] shadow-md scale-110" // ✅ حالت فعال (ریز و طلایی)
+            : "w-2 h-2 border border-[#FFD700] bg-transparent hover:bg-[#FFD700]" // ✅ حالت عادی
+        }`}
+    ></button>
+  ))}
+</div>
+
     </div>
   );
+
 };
 
 export default Carousel;
