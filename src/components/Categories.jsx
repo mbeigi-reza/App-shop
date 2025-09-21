@@ -7,24 +7,24 @@ import img5 from "../images/category5.png";
 import img6 from "../images/category6.png";
 
 const categories = [
-  { img: img1, link: "/manto" },
-  { img: img2, link: "/shalvar" },
-  { img: img3, link: "/accessory" },
-  { img: img4, link: "/shoes" },
-  { img: img5, link: "/hats" },
-  { img: img6, link: "/bags" },
+  { img: img1, link: "/brand/nike" },
+  { img: img2, link: "/brand/adidas" },
+  { img: img3, link: "/brand/puma" },
+  { img: img4, link: "/brand/reebok" },
+  { img: img5, link: "/brand/nb" },
+  { img: img6, link: "/brand/converse" },
 ];
 
 const Categories = () => {
   return (
     <div className="max-w-7xl mx-auto px-4 py-8">
-      <div className="grid grid-cols-2 gap-4 sm:grid-cols-3 lg:grid-cols-6">
+      <div className="grid grid-cols-3 gap-4 lg:grid-cols-6">
         {categories.map((cat, index) => (
           <Link key={index} to={cat.link} className="group block">
             <img
               src={cat.img}
               alt={`category-${index}`}
-              className="w-full h-32 sm:h-40 lg:h-48 object-cover rounded-lg transform transition-transform duration-300 group-hover:scale-105"
+              className="w-full aspect-square object-cover rounded-xl transform transition-transform duration-300 group-hover:scale-105"
             />
           </Link>
         ))}

@@ -28,12 +28,12 @@ const Navbar = () => {
     >
       {/* سمت راست دکمه‌ها */}
       <div className="flex pl-4 space-x-2 sm:space-x-4">
-        <button className="flex items-center space-x-2 px-3 py-2 rounded-lg bg-[#FFD700] text-[#2a2a2a] hover:bg-yellow-500 transition">
-          <span className="text-sm">سبد خرید</span>
+        <button className="flex items-center space-x-2 px-3 py-2 rounded-lg bg-[#eab308] text-[#2a2a2a] hover:bg-yellow-500 transition">
+          <span className="text-sm font-bold">سبد خرید</span>
           <FiShoppingCart className="w-5 h-5" />
         </button>
-        <button className="flex items-center space-x-2 px-3 py-2 rounded-lg bg-[#FFD700] text-[#2a2a2a] hover:bg-yellow-500 transition">
-          <span className="text-sm">حساب کاربری</span>
+        <button className="flex items-center space-x-2 px-3 py-2 rounded-lg border border-[#eab308] bg-[#2a2a2a] text-[#eab308] hover:bg-yellow-500 transition">
+          <span className="text-sm font-semibold">حساب کاربری</span>
           <FiUser className="w-5 h-5" />
         </button>
       </div>
