@@ -28,15 +28,23 @@ const Navbar = () => {
     >
       {/* سمت راست دکمه‌ها */}
       <div className="flex pl-4 space-x-2 sm:space-x-4">
-        <button className="flex items-center space-x-2 px-3 py-2 rounded-lg bg-[#eab308] text-[#2a2a2a] hover:bg-yellow-500 transition">
-          <span className="text-sm font-bold">سبد خرید</span>
-          <FiShoppingCart className="w-5 h-5" />
-        </button>
-        <button className="flex items-center space-x-2 px-3 py-2 rounded-lg border border-[#eab308] bg-[#2a2a2a] text-[#eab308] hover:bg-yellow-500 transition">
-          <span className="text-sm font-semibold">حساب کاربری</span>
+      {/* دکمه سبد خرید */}
+       <button className="relative overflow-hidden flex items-center space-x-2 px-3 py-2 rounded-lg bg-[#eab308] text-[#2a2a2a] transition">
+         <span className="text-sm font-bold">سبد خرید</span>
+         <FiShoppingCart className="w-5 h-5" />
+          {/* افکت نور مورب */}
+          <span className="absolute inset-0 before:absolute before:top-0 before:left-[-75%] before:w-[50%] before:h-full before:bg-gradient-to-r before:from-transparent before:via-white/30 before:to-transparent before:skew-x-[-20deg] before:transition-transform before:duration-500 hover:before:translate-x-[200%]" />
+       </button>
+
+        {/* دکمه حساب کاربری */}
+       <button className="relative overflow-hidden flex items-center space-x-2 px-3 py-2 rounded-lg border border-[#eab308] bg-[#2a2a2a] text-[#eab308] transition">
+         <span className="text-sm font-semibold">حساب کاربری</span>
           <FiUser className="w-5 h-5" />
-        </button>
-      </div>
+          {/* افکت نور مورب */}
+         <span className="absolute inset-0 before:absolute before:top-0 before:left-[-75%] before:w-[50%] before:h-full before:bg-gradient-to-r before:from-transparent before:via-white/30 before:to-transparent before:skew-x-[-20deg] before:transition-transform before:duration-500 hover:before:translate-x-[200%]" />
+       </button>
+    </div>
+
 
       {/* منوی دسکتاپ */}
       <ul
