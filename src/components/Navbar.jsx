@@ -1,10 +1,11 @@
 import { useState, useEffect } from "react";
-import { Link } from "react-router-dom";
+import { Link, useNavigate } from "react-router-dom";
 import { FiShoppingCart, FiUser, FiChevronLeft } from "react-icons/fi";
 
 const Navbar = () => {
   const [isOpen, setIsOpen] = useState(false);
   const [scrolled, setScrolled] = useState(false);
+  const navigate = useNavigate(); // ← اضافه شد
 
   useEffect(() => {
     const handleScroll = () => setScrolled(window.scrollY > 50);
@@ -28,23 +29,23 @@ const Navbar = () => {
     >
       {/* سمت راست دکمه‌ها */}
       <div className="flex pl-4 space-x-2 sm:space-x-4">
-      {/* دکمه سبد خرید */}
-       <button className="relative overflow-hidden flex items-center space-x-2 px-3 py-2 rounded-lg bg-[#eab308] text-[#2a2a2a] transition">
-         <span className="text-sm font-bold">سبد خرید</span>
-         <FiShoppingCart className="w-5 h-5" />
-          {/* افکت نور مورب */}
+        {/* دکمه سبد خرید */}
+        <button className="relative overflow-hidden flex items-center space-x-2 px-3 py-2 rounded-lg bg-[#eab308] text-[#2a2a2a] transition">
+          <span className="text-sm font-bold">سبد خرید</span>
+          <FiShoppingCart className="w-5 h-5" />
           <span className="absolute inset-0 before:absolute before:top-0 before:left-[-75%] before:w-[50%] before:h-full before:bg-gradient-to-r before:from-transparent before:via-white/30 before:to-transparent before:skew-x-[-20deg] before:transition-transform before:duration-500 hover:before:translate-x-[200%]" />
-       </button>
+        </button>
 
-        {/* دکمه حساب کاربری */}
-       <button className="relative overflow-hidden flex items-center space-x-2 px-3 py-2 rounded-lg border border-[#eab308] bg-[#2a2a2a] text-[#eab308] transition">
-         <span className="text-sm font-semibold">حساب کاربری</span>
+        {/* دکمه ثبت نام | ورود */}
+        <button
+          onClick={() => navigate("/register")} // ← تغییر مسیر به /register
+          className="relative overflow-hidden flex items-center space-x-2 px-3 py-2 rounded-lg border border-[#eab308] bg-[#2a2a2a] text-[#eab308] transition"
+        >
+          <span className="text-sm font-semibold">ثبت نام | ورود</span>
           <FiUser className="w-5 h-5" />
-          {/* افکت نور مورب */}
-         <span className="absolute inset-0 before:absolute before:top-0 before:left-[-75%] before:w-[50%] before:h-full before:bg-gradient-to-r before:from-transparent before:via-white/30 before:to-transparent before:skew-x-[-20deg] before:transition-transform before:duration-500 hover:before:translate-x-[200%]" />
-       </button>
-    </div>
-
+          <span className="absolute inset-0 before:absolute before:top-0 before:left-[-75%] before:w-[50%] before:h-full before:bg-gradient-to-r before:from-transparent before:via-white/30 before:to-transparent before:skew-x-[-20deg] before:transition-transform before:duration-500 hover:before:translate-x-[200%]" />
+        </button>
+      </div>
 
       {/* منوی دسکتاپ */}
       <ul
@@ -82,19 +83,32 @@ const Navbar = () => {
                 onClick={() => setIsOpen(false)}
                 className="flex justify-between items-center py-3 px-4 hover:text-[#FFD700] hover:bg-[#FFD700]/10 transition"
               >
-                <FiChevronLeft className="text-[#FFD700] w-5 h-5" /> {/* ایکون سمت چپ */}
-                <span className="text-right">{item.name}</span> {/* متن سمت راست */}
+                <FiChevronLeft className="text-[#FFD700] w-5 h-5" />
+                <span className="text-right">{item.name}</span>
               </Link>
             </li>
           ))}
+          {/* دکمه ثبت نام در منوی موبایل */}
+          <li>
+            <button
+              onClick={() => {
+                setIsOpen(false);
+                navigate("/register");
+              }}
+              className="flex justify-between items-center py-3 px-4 w-full text-right hover:text-[#FFD700] hover:bg-[#FFD700]/10 transition"
+            >
+              <FiUser className="text-[#FFD700] w-5 h-5" />
+              <span>ثبت نام | ورود</span>
+            </button>
+          </li>
         </ul>
       </div>
 
-      {/* پس‌زمینه نیمه شفاف وقتی منو بازه */}
+      {/* پس‌زمینه نیمه شفاف */}
       {isOpen && (
         <div
           onClick={() => setIsOpen(false)}
-          className="fixed inset-0 bg-black bg-opacity-50 z-40"
+          className="fixed inset-0 bg-black/70 backdrop-blur-sm z-40"
         ></div>
       )}
     </nav>

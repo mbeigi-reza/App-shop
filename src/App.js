@@ -13,29 +13,110 @@ import BrandReebok from "./pages/BrandReebok";
 import BrandNB from "./pages/BrandNB";
 import BrandConverse from "./pages/BrandConverse";
 
+import Register from "./pages/Register";
+
 function App() {
   return (
     <Router>
-      <div className="flex flex-col min-h-screen">
-        <Header />
+      <Routes>
+        {/* صفحات معمولی با Header و Footer */}
+        <Route
+          path="/"
+          element={
+            <>
+              <Header />
+              <Home />
+              <Footer />
+            </>
+          }
+        />
+        <Route
+          path="/manto"
+          element={
+            <>
+              <Header />
+              <Manto />
+              <Footer />
+            </>
+          }
+        />
+        <Route
+          path="/shalvar"
+          element={
+            <>
+              <Header />
+              <Shalvar />
+              <Footer />
+            </>
+          }
+        />
+        <Route
+          path="/brand/nike"
+          element={
+            <>
+              <Header />
+              <BrandNike />
+              <Footer />
+            </>
+          }
+        />
+        <Route
+          path="/brand/adidas"
+          element={
+            <>
+              <Header />
+              <BrandAdidas />
+              <Footer />
+            </>
+          }
+        />
+        <Route
+          path="/brand/puma"
+          element={
+            <>
+              <Header />
+              <BrandPuma />
+              <Footer />
+            </>
+          }
+        />
+        <Route
+          path="/brand/reebok"
+          element={
+            <>
+              <Header />
+              <BrandReebok />
+              <Footer />
+            </>
+          }
+        />
+        <Route
+          path="/brand/nb"
+          element={
+            <>
+              <Header />
+              <BrandNB />
+              <Footer />
+            </>
+          }
+        />
+        <Route
+          path="/brand/converse"
+          element={
+            <>
+              <Header />
+              <BrandConverse />
+              <Footer />
+            </>
+          }
+        />
 
-        <main className="flex-1">
-          <Routes>
-            <Route path="/" element={<Home />} />
-            <Route path="/manto" element={<Manto />} />
-            <Route path="/shalvar" element={<Shalvar />} />
-
-            <Route path="/brand/nike" element={<BrandNike />} />
-            <Route path="/brand/adidas" element={<BrandAdidas />} />
-            <Route path="/brand/puma" element={<BrandPuma />} />
-            <Route path="/brand/reebok" element={<BrandReebok />} />
-            <Route path="/brand/nb" element={<BrandNB />} />
-            <Route path="/brand/converse" element={<BrandConverse />} />
-          </Routes>
-        </main>
-
-        <Footer />
-      </div>
+        {/* صفحه ثبت نام بدون Header */}
+        <Route
+          path="/register"
+          element={<Register />} // فقط فرم ثبت نام + Footer داخل خودش باشد
+        />
+      </Routes>
     </Router>
   );
 }
