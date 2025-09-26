@@ -14,6 +14,7 @@ import BrandNB from "./pages/BrandNB";
 import BrandConverse from "./pages/BrandConverse";
 
 import Register from "./pages/Register";
+import ProductsPage from "./pages/ProductsPage"; // ← اضافه شد
 
 function App() {
   return (
@@ -50,6 +51,18 @@ function App() {
             </>
           }
         />
+        <Route
+          path="/products"
+          element={
+            <>
+              <Header />
+              <ProductsPage />
+              <Footer />
+            </>
+          }
+        />
+
+        {/* برندها */}
         <Route
           path="/brand/nike"
           element={
@@ -112,10 +125,7 @@ function App() {
         />
 
         {/* صفحه ثبت نام بدون Header */}
-        <Route
-          path="/register"
-          element={<Register />} // فقط فرم ثبت نام + Footer داخل خودش باشد
-        />
+        <Route path="/register" element={<Register />} />
       </Routes>
     </Router>
   );
