@@ -1,9 +1,11 @@
 // src/components/ProductCard.jsx
 import React from "react";
 import { useCart } from "../context/CartContext";
+import { useNavigate } from "react-router-dom";
 
 const ProductCard = ({ id, title, price, imgSrc }) => {
   const { addToCart } = useCart();
+  const navigate = useNavigate();
 
   return (
     <div className="bg-[#2a2a2a] p-2 rounded-lg shadow-md hover:shadow-xl transition flex flex-col items-center">
@@ -25,9 +27,15 @@ const ProductCard = ({ id, title, price, imgSrc }) => {
 
         {/* دکمه‌ها */}
         <div className="flex space-x-2 mt-3">
-          <button className="px-3 py-1 bg-gray-600 text-white rounded-md hover:scale-105 transition">
+          {/* ✅ رفتن به صفحه جزئیات محصول */}
+          <button
+            onClick={() => navigate(`/product/${id}`)}
+            className="px-3 py-1 bg-gray-600 text-white rounded-md hover:scale-105 transition"
+          >
             دیدن محصول
           </button>
+
+          {/* افزودن به سبد خرید */}
           <button
             onClick={() =>
               addToCart({

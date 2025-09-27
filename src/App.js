@@ -14,7 +14,8 @@ import BrandNB from "./pages/BrandNB";
 import BrandConverse from "./pages/BrandConverse";
 
 import Register from "./pages/Register";
-import ProductsPage from "./pages/ProductsPage"; // ← اضافه شد
+import ProductsPage from "./pages/ProductsPage";
+import ProductDetail from "./pages/ProductDetail";
 
 function App() {
   return (
@@ -126,6 +127,17 @@ function App() {
 
         {/* صفحه ثبت نام بدون Header */}
         <Route path="/register" element={<Register />} />
+
+        {/* صفحه جزئیات محصول با Footer ولی بدون Header */}
+        <Route
+          path="/product/:id"
+          element={
+            <>
+              <ProductDetail />
+              <Footer />
+            </>
+          }
+        />
       </Routes>
     </Router>
   );
