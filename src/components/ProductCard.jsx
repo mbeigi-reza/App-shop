@@ -30,7 +30,7 @@ const ProductCard = ({ id, title, price, imgSrc }) => {
           {/* ✅ رفتن به صفحه جزئیات محصول */}
           <button
             onClick={() => navigate(`/product/${id}`)}
-            className="px-3 py-1 bg-gray-600 text-white rounded-md hover:scale-105 transition"
+            className="px-3 py-1 bg-gray-600 text-[#F8c62A] rounded-md hover:scale-105 transition"
           >
             دیدن محصول
           </button>
@@ -46,7 +46,7 @@ const ProductCard = ({ id, title, price, imgSrc }) => {
                 qty: 1,
               })
             }
-            className="px-3 py-1 bg-[#FFD700] text-[#2a2a2a] rounded-md hover:scale-105 transition"
+            className="px-3 py-1 bg-[#F8c62A] text-[#ffffff] rounded-md hover:scale-105 transition"
           >
             افزودن 🛒
           </button>

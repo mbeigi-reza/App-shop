@@ -1,16 +1,25 @@
 // src/components/Navbar.jsx
 import { useState, useEffect } from "react";
 import { Link, useNavigate } from "react-router-dom";
-import { FiShoppingCart, FiUser, FiChevronLeft, FiX } from "react-icons/fi";
-import { useCart } from "../context/CartContext"; // ⬅️ استفاده از context
+import {
+  FiShoppingCart,
+  FiUser,
+  FiChevronLeft,
+  FiX,
+  FiSun,
+  FiMoon,
+} from "react-icons/fi";
+import { useCart } from "../context/CartContext";
 
 const Navbar = () => {
   const [isOpen, setIsOpen] = useState(false);
   const [scrolled, setScrolled] = useState(false);
   const [cartOpen, setCartOpen] = useState(false);
+  const [darkMode, setDarkMode] = useState(
+    localStorage.getItem("theme") === "dark"
+  );
   const navigate = useNavigate();
 
-  // گرفتن داده‌ها از context
   const { cart, removeFromCart, updateQty, totalPrice } = useCart();
 
   useEffect(() => {
@@ -18,6 +27,16 @@ const Navbar = () => {
     window.addEventListener("scroll", handleScroll);
     return () => window.removeEventListener("scroll", handleScroll);
   }, []);
+
+  useEffect(() => {
+    if (darkMode) {
+      document.documentElement.classList.add("dark");
+      localStorage.setItem("theme", "dark");
+    } else {
+      document.documentElement.classList.remove("dark");
+      localStorage.setItem("theme", "light");
+    }
+  }, [darkMode]);
 
   const menuItems = [
     { name: "خانه", link: "/" },
@@ -32,10 +51,31 @@ const Navbar = () => {
     <>
       <nav
         className={`w-full flex justify-between items-center px-4 sm:px-8 p-4 fixed top-0 z-50 transition-colors duration-300
-        ${scrolled ? "bg-[#1F1F1F] shadow-md" : "bg-transparent"}`}
+        ${
+          scrolled
+            ? "bg-[#1F1F1F] shadow-md dark:bg-gray-900"
+            : "bg-transparent"
+        }`}
       >
         {/* سمت راست دکمه‌ها */}
-        <div className="flex pl-4 space-x-2 sm:space-x-4">
+        <div className="flex pl-4 space-x-2 sm:space-x-4 items-center">
+          {/* آیکون تم */}
+          <button
+            onClick={() => setDarkMode(!darkMode)}
+            className="flex items-center justify-center w-10 h-10 rounded-full bg-gray-200 text-gray-900 hover:opacity-80 transition dark:bg-gray-700 dark:text-yellow-400"
+          >
+            {darkMode ? <FiSun size={18} /> : <FiMoon size={18} />}
+          </button>
+
+          {/* دکمه ثبت نام | ورود */}
+          <button
+            onClick={() => navigate("/register")}
+            className="relative overflow-hidden flex items-center space-x-2 px-3 py-2 rounded-lg border border-[#eab308] bg-[#2a2a2a] text-[#eab308] transition"
+          >
+            <span className="text-sm font-semibold">ثبت نام | ورود</span>
+            <FiUser className="w-5 h-5" />
+          </button>
+
           {/* آیکون سبد خرید */}
           <button
             onClick={() => setCartOpen(true)}
@@ -47,15 +87,6 @@ const Navbar = () => {
                 {cart.length}
               </span>
             )}
-          </button>
-
-          {/* دکمه ثبت نام | ورود */}
-          <button
-            onClick={() => navigate("/register")}
-            className="relative overflow-hidden flex items-center space-x-2 px-3 py-2 rounded-lg border border-[#eab308] bg-[#2a2a2a] text-[#eab308] transition"
-          >
-            <span className="text-sm font-semibold">ثبت نام | ورود</span>
-            <FiUser className="w-5 h-5" />
           </button>
         </div>
 
@@ -136,7 +167,6 @@ const Navbar = () => {
           </button>
         </div>
 
-        {/* لیست محصولات */}
         <div className="p-4 space-y-3 max-h-64 overflow-y-auto">
           {cart.length === 0 ? (
             <p className="text-center text-gray-400">سبد خرید خالی است</p>
@@ -189,7 +219,6 @@ const Navbar = () => {
           )}
         </div>
 
-        {/* جمع کل */}
         <div className="p-4 border-t border-gray-700 flex justify-between items-center">
           <span className="font-bold">جمع کل:</span>
           <span className="text-yellow-400">
@@ -197,7 +226,6 @@ const Navbar = () => {
           </span>
         </div>
 
-        {/* دکمه پرداخت */}
         {cart.length > 0 && (
           <div className="p-4">
             <button className="w-full bg-yellow-400 text-black py-2 rounded font-bold hover:opacity-90 transition">

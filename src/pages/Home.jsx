@@ -24,7 +24,7 @@ const Home = () => {
         <div className="text-center mt-8">
           <Link
             to="/products"
-            className="px-6 py-2 bg-[#FFD700] text-[#2a2a2a] rounded-lg shadow-md hover:bg-[#e6c200] transition"
+            className="px-6 py-2 bg-[#FFD700] text-[#2a2a2a] border-[#ffffff] rounded-lg shadow-md hover:bg-[#e6c200] transition"
           >
             مشاهده ادامه محصولات
           </Link>
