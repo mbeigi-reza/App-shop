@@ -3,7 +3,7 @@ import Carousel from "./Carousel";
 
 const Header = () => {
   return (
-    <header className="relative w-full">
+    <header className="relative w-full bg-white dark:bg-gray-900">
       <Navbar />
       <Carousel />
     </header>

@@ -27,8 +27,8 @@ const ProductImages = ({ images }) => {
               alt={`product-${index}`}
               className={`absolute transition-all duration-500 rounded-lg shadow-lg cursor-pointer border-2
                 ${isActive 
-                  ? "scale-100 z-20 border-amber-400 shadow-amber-200/50" 
-                  : "scale-90 opacity-70 z-10 border-amber-100"
+                  ? "scale-100 z-20 border-amber-400 dark:border-amber-500 shadow-amber-200/50 dark:shadow-amber-500/30" 
+                  : "scale-90 opacity-70 z-10 border-amber-100 dark:border-gray-600"
                 }
               `}
               style={{
@@ -42,13 +42,13 @@ const ProductImages = ({ images }) => {
       {/* دکمه‌های ناوبری */}
       <button
         onClick={prevImage}
-        className="absolute left-0 top-1/2 -translate-y-1/2 bg-amber-500 text-white p-3 rounded-full hover:bg-amber-600 hover:scale-110 transition-all duration-200 shadow-lg hover:shadow-amber-300/40"
+        className="absolute left-0 top-1/2 -translate-y-1/2 bg-amber-500 dark:bg-amber-600 text-white p-3 rounded-full hover:bg-amber-600 dark:hover:bg-amber-700 hover:scale-110 transition-all duration-200 shadow-lg hover:shadow-amber-300/40 dark:hover:shadow-amber-500/30"
       >
         <FiChevronLeft size={24} />
       </button>
       <button
         onClick={nextImage}
-        className="absolute right-0 top-1/2 -translate-y-1/2 bg-amber-500 text-white p-3 rounded-full hover:bg-amber-600 hover:scale-110 transition-all duration-200 shadow-lg hover:shadow-amber-300/40"
+        className="absolute right-0 top-1/2 -translate-y-1/2 bg-amber-500 dark:bg-amber-600 text-white p-3 rounded-full hover:bg-amber-600 dark:hover:bg-amber-700 hover:scale-110 transition-all duration-200 shadow-lg hover:shadow-amber-300/40 dark:hover:shadow-amber-500/30"
       >
         <FiChevronRight size={24} />
       </button>
@@ -61,8 +61,8 @@ const ProductImages = ({ images }) => {
             onClick={() => setCurrentIndex(index)}
             className={`w-3 h-3 rounded-full transition-all duration-300 ${
               index === currentIndex 
-                ? "bg-amber-500 scale-125" 
-                : "bg-amber-200 hover:bg-amber-300"
+                ? "bg-amber-500 dark:bg-amber-400 scale-125" 
+                : "bg-amber-200 dark:bg-gray-600 hover:bg-amber-300 dark:hover:bg-amber-500"
             }`}
           />
         ))}

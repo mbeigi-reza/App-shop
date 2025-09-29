@@ -16,8 +16,8 @@ const HomeProducts = ({ initialProducts }) => {
   };
 
   return (
-    <section className="max-w-6xl mx-auto px-4 py-12">
-      <h2 className="text-3xl font-bold mb-8 border-b-4 border-amber-500 pb-2 inline-block text-gray-800">
+    <section className="max-w-6xl mx-auto px-4 py-12 bg-white dark:bg-gray-900">
+      <h2 className="text-3xl font-bold mb-8 border-b-4 border-amber-500 dark:border-amber-400 pb-2 inline-block text-gray-800 dark:text-white">
         محصولات ما
       </h2>
       <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 xl:grid-cols-3 gap-8">
@@ -37,7 +37,7 @@ const HomeProducts = ({ initialProducts }) => {
         <div className="flex justify-center mt-8">
           <button
             onClick={handleToggle}
-            className="px-8 py-3 bg-amber-500 text-white font-bold rounded-lg hover:scale-105 transition-all duration-200 hover:bg-amber-600 hover:shadow-lg hover:shadow-amber-300/40"
+            className="px-8 py-3 bg-amber-500 dark:bg-amber-600 text-white font-bold rounded-lg hover:scale-105 transition-all duration-200 hover:bg-amber-600 dark:hover:bg-amber-700 hover:shadow-lg hover:shadow-amber-300/40 dark:hover:shadow-amber-500/30"
           >
             {expanded ? "بستن" : "مشاهده محصولات بیشتر"}
           </button>

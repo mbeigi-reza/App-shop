@@ -23,15 +23,15 @@ const ProductCarousel = () => {
   };
 
   return (
-    <section className="max-w-6xl mx-auto px-4 py-12">
-      <h2 className="text-3xl font-bold mb-8 border-b-4 border-amber-500 pb-2 inline-block text-gray-800">
+    <section className="max-w-6xl mx-auto px-4 py-12 bg-white dark:bg-gray-900">
+      <h2 className="text-3xl font-bold mb-8 border-b-4 border-amber-500 dark:border-amber-400 pb-2 inline-block text-gray-800 dark:text-white">
         محصولات ویژه
       </h2>
       <div className="relative flex items-center">
         <button
           onClick={prev}
           disabled={startIndex === 0}
-          className="absolute left-0 z-10 bg-amber-500 text-white px-4 py-3 rounded-lg hover:scale-105 transition-all duration-200 hover:bg-amber-600 hover:shadow-lg hover:shadow-amber-300/40 disabled:opacity-50 disabled:cursor-not-allowed disabled:hover:scale-100"
+          className="absolute left-0 z-10 bg-amber-500 dark:bg-amber-600 text-white px-4 py-3 rounded-lg hover:scale-105 transition-all duration-200 hover:bg-amber-600 dark:hover:bg-amber-700 hover:shadow-lg hover:shadow-amber-300/40 dark:hover:shadow-amber-500/30 disabled:opacity-50 disabled:cursor-not-allowed disabled:hover:scale-100"
         >
           {"‹"}
         </button>
@@ -51,7 +51,7 @@ const ProductCarousel = () => {
         <button
           onClick={next}
           disabled={startIndex >= products.length - visibleCount}
-          className="absolute right-0 z-10 bg-amber-500 text-white px-4 py-3 rounded-lg hover:scale-105 transition-all duration-200 hover:bg-amber-600 hover:shadow-lg hover:shadow-amber-300/40 disabled:opacity-50 disabled:cursor-not-allowed disabled:hover:scale-100"
+          className="absolute right-0 z-10 bg-amber-500 dark:bg-amber-600 text-white px-4 py-3 rounded-lg hover:scale-105 transition-all duration-200 hover:bg-amber-600 dark:hover:bg-amber-700 hover:shadow-lg hover:shadow-amber-300/40 dark:hover:shadow-amber-500/30 disabled:opacity-50 disabled:cursor-not-allowed disabled:hover:scale-100"
         >
           {"›"}
         </button>

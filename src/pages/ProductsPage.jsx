@@ -54,19 +54,19 @@ const products = [
 
 const ProductsPage = () => {
   return (
-    <div className="min-h-screen bg-amber-50 py-8">
+    <div className="min-h-screen bg-amber-50 dark:bg-gray-900 py-8">
       <div className="max-w-7xl mx-auto px-4">
         {/* عنوان صفحه */}
         <div className="text-center mb-8">
-          <h1 className="text-4xl font-bold text-gray-800 mb-4">همه محصولات</h1>
-          <p className="text-gray-600 text-lg">محصولات شیک و با کیفیت برای هر سلیقه‌ای</p>
+          <h1 className="text-4xl font-bold text-gray-800 dark:text-white mb-4">همه محصولات</h1>
+          <p className="text-gray-600 dark:text-gray-300 text-lg">محصولات شیک و با کیفیت برای هر سلیقه‌ای</p>
         </div>
 
         {/* فیلترها و مرتب‌سازی */}
-        <div className="flex flex-col md:flex-row justify-between items-center gap-4 mb-8 p-4 bg-white rounded-xl shadow-sm border border-amber-100">
+        <div className="flex flex-col md:flex-row justify-between items-center gap-4 mb-8 p-4 bg-white dark:bg-gray-800 rounded-xl shadow-sm border border-amber-100 dark:border-gray-700">
           <div className="flex items-center gap-4">
-            <span className="text-gray-700 font-medium">مرتب‌سازی بر اساس:</span>
-            <select className="bg-amber-50 border border-amber-200 rounded-lg px-4 py-2 text-gray-800 focus:border-amber-500 focus:ring-2 focus:ring-amber-200 focus:outline-none transition-colors">
+            <span className="text-gray-700 dark:text-gray-300 font-medium">مرتب‌سازی بر اساس:</span>
+            <select className="bg-amber-50 dark:bg-gray-700 border border-amber-200 dark:border-gray-600 rounded-lg px-4 py-2 text-gray-800 dark:text-white focus:border-amber-500 dark:focus:border-amber-400 focus:ring-2 focus:ring-amber-200 dark:focus:ring-amber-500/30 focus:outline-none transition-colors">
               <option>پربازدیدترین</option>
               <option>جدیدترین</option>
               <option>ارزان‌ترین</option>
@@ -75,7 +75,7 @@ const ProductsPage = () => {
           </div>
           
           <div className="flex items-center gap-2">
-            <span className="text-amber-600 font-bold">{products.length} محصول</span>
+            <span className="text-amber-600 dark:text-amber-400 font-bold">{products.length} محصول</span>
           </div>
         </div>
 
@@ -94,16 +94,16 @@ const ProductsPage = () => {
 
         {/* صفحه‌بندی */}
         <div className="flex justify-center items-center gap-2 mt-12">
-          <button className="px-4 py-2 bg-amber-500 text-white rounded-lg hover:bg-amber-600 transition-colors font-medium">
+          <button className="px-4 py-2 bg-amber-500 dark:bg-amber-600 text-white rounded-lg hover:bg-amber-600 dark:hover:bg-amber-700 transition-colors font-medium">
             ۱
           </button>
-          <button className="px-4 py-2 bg-white border border-amber-300 text-amber-600 rounded-lg hover:bg-amber-50 transition-colors font-medium">
+          <button className="px-4 py-2 bg-white dark:bg-gray-800 border border-amber-300 dark:border-amber-600 text-amber-600 dark:text-amber-400 rounded-lg hover:bg-amber-50 dark:hover:bg-gray-700 transition-colors font-medium">
             ۲
           </button>
-          <button className="px-4 py-2 bg-white border border-amber-300 text-amber-600 rounded-lg hover:bg-amber-50 transition-colors font-medium">
+          <button className="px-4 py-2 bg-white dark:bg-gray-800 border border-amber-300 dark:border-amber-600 text-amber-600 dark:text-amber-400 rounded-lg hover:bg-amber-50 dark:hover:bg-gray-700 transition-colors font-medium">
             ۳
           </button>
-          <button className="px-4 py-2 bg-white border border-amber-300 text-amber-600 rounded-lg hover:bg-amber-50 transition-colors font-medium">
+          <button className="px-4 py-2 bg-white dark:bg-gray-800 border border-amber-300 dark:border-amber-600 text-amber-600 dark:text-amber-400 rounded-lg hover:bg-amber-50 dark:hover:bg-gray-700 transition-colors font-medium">
             بعدی ›
           </button>
         </div>

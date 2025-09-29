@@ -35,24 +35,24 @@ const Cart = () => {
   );
 
   return (
-    <div className="max-w-lg mx-auto p-6 bg-white text-gray-800 rounded-xl shadow-lg border border-amber-100">
-      <h2 className="text-2xl font-bold mb-6 text-amber-600 border-b-4 border-amber-500 pb-2">
+    <div className="max-w-lg mx-auto p-6 bg-white dark:bg-gray-800 text-gray-800 dark:text-white rounded-xl shadow-lg border border-amber-100 dark:border-gray-700">
+      <h2 className="text-2xl font-bold mb-6 text-amber-600 dark:text-amber-400 border-b-4 border-amber-500 dark:border-amber-400 pb-2">
         🛒 سبد خرید
       </h2>
 
       {cartItems.length === 0 ? (
-        <p className="text-gray-500 text-center py-8">سبد خرید شما خالی است</p>
+        <p className="text-gray-500 dark:text-gray-400 text-center py-8">سبد خرید شما خالی است</p>
       ) : (
         <div className="space-y-4">
           {cartItems.map((item) => (
             <div
               key={item.id}
-              className="flex items-center justify-between bg-amber-50 border border-amber-200 rounded-lg p-4 shadow-sm relative hover:shadow-md transition-all duration-200"
+              className="flex items-center justify-between bg-amber-50 dark:bg-gray-700 border border-amber-200 dark:border-gray-600 rounded-lg p-4 shadow-sm relative hover:shadow-md dark:hover:shadow-gray-600/30 transition-all duration-200"
             >
               {/* دکمه حذف */}
               <button
                 onClick={() => removeItem(item.id)}
-                className="absolute top-3 left-3 text-red-500 hover:text-red-600 transition-colors p-1 rounded-full hover:bg-red-50"
+                className="absolute top-3 left-3 text-red-500 hover:text-red-600 transition-colors p-1 rounded-full hover:bg-red-50 dark:hover:bg-red-900/30"
               >
                 <X size={18} />
               </button>
@@ -62,11 +62,11 @@ const Cart = () => {
                 <img
                   src={item.image}
                   alt={item.name}
-                  className="w-16 h-16 rounded-lg object-cover border border-amber-200"
+                  className="w-16 h-16 rounded-lg object-cover border border-amber-200 dark:border-gray-600"
                 />
                 <div>
-                  <h3 className="font-semibold text-gray-800">{item.name}</h3>
-                  <p className="text-sm text-amber-600 font-medium">
+                  <h3 className="font-semibold text-gray-800 dark:text-white">{item.name}</h3>
+                  <p className="text-sm text-amber-600 dark:text-amber-400 font-medium">
                     {item.price.toLocaleString()} تومان
                   </p>
                 </div>
@@ -76,16 +76,16 @@ const Cart = () => {
               <div className="flex items-center space-x-3">
                 <button
                   onClick={() => decreaseQuantity(item.id)}
-                  className="bg-amber-500 text-white p-1 rounded-lg hover:bg-amber-600 transition-colors shadow-sm"
+                  className="bg-amber-500 dark:bg-amber-600 text-white p-1 rounded-lg hover:bg-amber-600 dark:hover:bg-amber-700 transition-colors shadow-sm"
                 >
                   <Minus size={16} />
                 </button>
-                <span className="px-3 font-bold min-w-8 text-center text-gray-800">
+                <span className="px-3 font-bold min-w-8 text-center text-gray-800 dark:text-white">
                   {item.quantity}
                 </span>
                 <button
                   onClick={() => increaseQuantity(item.id)}
-                  className="bg-amber-500 text-white p-1 rounded-lg hover:bg-amber-600 transition-colors shadow-sm"
+                  className="bg-amber-500 dark:bg-amber-600 text-white p-1 rounded-lg hover:bg-amber-600 dark:hover:bg-amber-700 transition-colors shadow-sm"
                 >
                   <Plus size={16} />
                 </button>
@@ -94,15 +94,15 @@ const Cart = () => {
           ))}
 
           {/* جمع کل */}
-          <div className="flex justify-between items-center border-t border-amber-200 pt-4 mt-4">
-            <span className="text-lg font-bold text-gray-800">جمع کل:</span>
-            <span className="text-amber-600 font-extrabold text-xl">
+          <div className="flex justify-between items-center border-t border-amber-200 dark:border-gray-600 pt-4 mt-4">
+            <span className="text-lg font-bold text-gray-800 dark:text-white">جمع کل:</span>
+            <span className="text-amber-600 dark:text-amber-400 font-extrabold text-xl">
               {totalPrice.toLocaleString()} تومان
             </span>
           </div>
 
           {/* دکمه پرداخت */}
-          <button className="w-full bg-amber-500 text-white py-3 rounded-lg font-bold hover:bg-amber-600 transition-all duration-200 shadow-md hover:shadow-amber-300/40 mt-4">
+          <button className="w-full bg-amber-500 dark:bg-amber-600 text-white py-3 rounded-lg font-bold hover:bg-amber-600 dark:hover:bg-amber-700 transition-all duration-200 shadow-md hover:shadow-amber-300/40 dark:hover:shadow-amber-500/30 mt-4">
             ادامه فرآیند خرید
           </button>
         </div>
