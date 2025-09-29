@@ -5,9 +5,9 @@ import img2 from "../images/featured2.png";
 import img3 from "../images/featured3.png";
 
 const products = [
-  { img: img1, title: "ویژه 1", caption: "کپشن ویژه 1", price: "250,000 تومان" },
-  { img: img2, title: "ویژه 2", caption: "کپشن ویژه 2", price: "270,000 تومان" },
-  { img: img3, title: "ویژه 3", caption: "کپشن ویژه 3", price: "300,000 تومان" },
+  { id: 1, img: img1, title: "ویژه 1", caption: "کپشن ویژه 1", price: 250000 },
+  { id: 2, img: img2, title: "ویژه 2", caption: "کپشن ویژه 2", price: 270000 },
+  { id: 3, img: img3, title: "ویژه 3", caption: "کپشن ویژه 3", price: 300000 },
 ];
 
 const ProductCarousel = () => {
@@ -24,26 +24,36 @@ const ProductCarousel = () => {
 
   return (
     <section className="max-w-6xl mx-auto px-4 py-12">
-      <h2 className="text-3xl font-bold mb-6 border-b-2 border-[#FFD700] inline-block text-gray-200">
+      <h2 className="text-3xl font-bold mb-8 border-b-4 border-amber-500 pb-2 inline-block text-gray-800">
         محصولات ویژه
       </h2>
       <div className="relative flex items-center">
         <button
           onClick={prev}
-          className="absolute left-0 z-10 bg-[#FFD700] text-[#2a2a2a] px-3 py-2 rounded hover:scale-105 transition"
+          disabled={startIndex === 0}
+          className="absolute left-0 z-10 bg-amber-500 text-white px-4 py-3 rounded-lg hover:scale-105 transition-all duration-200 hover:bg-amber-600 hover:shadow-lg hover:shadow-amber-300/40 disabled:opacity-50 disabled:cursor-not-allowed disabled:hover:scale-100"
         >
-          {"<"}
+          {"‹"}
         </button>
-        <div className="flex overflow-hidden gap-4 w-full">
-          {products.slice(startIndex, startIndex + visibleCount).map((p, i) => (
-            <ProductCard key={i} {...p} />
+        
+        <div className="flex overflow-hidden gap-8 w-full justify-center">
+          {products.slice(startIndex, startIndex + visibleCount).map((product) => (
+            <ProductCard 
+              key={product.id}
+              id={product.id}
+              title={product.title}
+              price={product.price}
+              imgSrc={product.img}
+            />
           ))}
         </div>
+        
         <button
           onClick={next}
-          className="absolute right-0 z-10 bg-[#FFD700] text-[#2a2a2a] px-3 py-2 rounded hover:scale-105 transition"
+          disabled={startIndex >= products.length - visibleCount}
+          className="absolute right-0 z-10 bg-amber-500 text-white px-4 py-3 rounded-lg hover:scale-105 transition-all duration-200 hover:bg-amber-600 hover:shadow-lg hover:shadow-amber-300/40 disabled:opacity-50 disabled:cursor-not-allowed disabled:hover:scale-100"
         >
-          {">"}
+          {"›"}
         </button>
       </div>
     </section>

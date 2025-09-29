@@ -3,8 +3,6 @@ import { useState } from "react";
 import { useNavigate } from "react-router-dom";
 import { ToastContainer, toast } from "react-toastify";
 import "react-toastify/dist/ReactToastify.css";
-import "../styles/RegisterForm.css";
-
 
 const AuthForm = () => {
   const [step, setStep] = useState(1); 
@@ -65,12 +63,12 @@ const AuthForm = () => {
   };
 
   return (
-    <div className="min-h-screen flex items-center justify-center bg-gradient-to-r from-gray-800 to-black p-4">
+    <div className="min-h-screen flex items-center justify-center bg-gradient-to-r from-amber-50 to-amber-100 p-4">
       <ToastContainer />
-      <div className="bg-[#1F1F1F] w-full max-w-md p-8 rounded-lg shadow-lg">
+      <div className="bg-white w-full max-w-md p-8 rounded-xl shadow-lg border border-amber-200">
         {step === 1 ? (
           <>
-            <h2 className="text-2xl font-bold text-yellow-400 mb-6 text-center">
+            <h2 className="text-2xl font-bold text-amber-600 mb-6 text-center">
               ثبت‌نام
             </h2>
             <form
@@ -85,10 +83,10 @@ const AuthForm = () => {
                     {...register("username", {
                       required: "نام کاربری الزامی است",
                     })}
-                    className="w-full px-4 py-2 rounded bg-gray-900 text-white focus:outline-none"
+                    className="w-full px-4 py-3 rounded-lg bg-amber-50 border border-amber-200 text-gray-800 focus:border-amber-500 focus:ring-2 focus:ring-amber-200 focus:outline-none transition-colors"
                   />
                   {errors.username && (
-                    <p className="text-red-400 text-sm">
+                    <p className="text-red-500 text-sm">
                       {errors.username.message}
                     </p>
                   )}
@@ -99,10 +97,10 @@ const AuthForm = () => {
                     {...register("email", {
                       required: "ایمیل الزامی است",
                     })}
-                    className="w-full px-4 py-2 rounded bg-gray-900 text-white focus:outline-none"
+                    className="w-full px-4 py-3 rounded-lg bg-amber-50 border border-amber-200 text-gray-800 focus:border-amber-500 focus:ring-2 focus:ring-amber-200 focus:outline-none transition-colors"
                   />
                   {errors.email && (
-                    <p className="text-red-400 text-sm">
+                    <p className="text-red-500 text-sm">
                       {errors.email.message}
                     </p>
                   )}
@@ -114,7 +112,7 @@ const AuthForm = () => {
                   type="text"
                   placeholder="کد تأیید (1234)"
                   {...register("otp", { required: "کد الزامی است" })}
-                  className="w-full px-4 py-2 rounded bg-gray-900 text-white focus:outline-none"
+                  className="w-full px-4 py-3 rounded-lg bg-amber-50 border border-amber-200 text-gray-800 focus:border-amber-500 focus:ring-2 focus:ring-amber-200 focus:outline-none transition-colors"
                   disabled={registerStep > 2}
                 />
               )}
@@ -127,10 +125,10 @@ const AuthForm = () => {
                     {...register("password", {
                       required: "رمز عبور الزامی است",
                     })}
-                    className="w-full px-4 py-2 rounded bg-gray-900 text-white focus:outline-none"
+                    className="w-full px-4 py-3 rounded-lg bg-amber-50 border border-amber-200 text-gray-800 focus:border-amber-500 focus:ring-2 focus:ring-amber-200 focus:outline-none transition-colors"
                   />
                   {errors.password && (
-                    <p className="text-red-400 text-sm">
+                    <p className="text-red-500 text-sm">
                       {errors.password.message}
                     </p>
                   )}
@@ -141,10 +139,10 @@ const AuthForm = () => {
                     {...register("confirmPassword", {
                       required: "تکرار رمز عبور الزامی است",
                     })}
-                    className="w-full px-4 py-2 rounded bg-gray-900 text-white focus:outline-none"
+                    className="w-full px-4 py-3 rounded-lg bg-amber-50 border border-amber-200 text-gray-800 focus:border-amber-500 focus:ring-2 focus:ring-amber-200 focus:outline-none transition-colors"
                   />
                   {errors.confirmPassword && (
-                    <p className="text-red-400 text-sm">
+                    <p className="text-red-500 text-sm">
                       {errors.confirmPassword.message}
                     </p>
                   )}
@@ -153,7 +151,7 @@ const AuthForm = () => {
 
               <button
                 type="submit"
-                className="w-full bg-yellow-400 text-black py-2 rounded font-bold hover:opacity-90 transition"
+                className="w-full bg-amber-500 text-white py-3 rounded-lg font-bold hover:bg-amber-600 hover:shadow-lg hover:shadow-amber-300/40 transition-all duration-200"
               >
                 {registerStep === 1
                   ? "ادامه"
@@ -163,11 +161,11 @@ const AuthForm = () => {
               </button>
             </form>
 
-            <p className="mt-4 text-center text-gray-400">
+            <p className="mt-6 text-center text-gray-600">
               ثبت‌نام کردید؟{" "}
               <span
                 onClick={() => setStep(2)}
-                className="text-yellow-400 cursor-pointer hover:underline"
+                className="text-amber-600 cursor-pointer hover:underline font-medium"
               >
                 ورود
               </span>
@@ -175,7 +173,7 @@ const AuthForm = () => {
           </>
         ) : (
           <>
-            <h2 className="text-2xl font-bold text-yellow-400 mb-6 text-center">
+            <h2 className="text-2xl font-bold text-amber-600 mb-6 text-center">
               ورود
             </h2>
             <form
@@ -186,42 +184,42 @@ const AuthForm = () => {
                 type="text"
                 placeholder="ایمیل یا نام کاربری"
                 {...register("login", { required: "این فیلد الزامی است" })}
-                className="w-full px-4 py-2 rounded bg-gray-900 text-white focus:outline-none"
+                className="w-full px-4 py-3 rounded-lg bg-amber-50 border border-amber-200 text-gray-800 focus:border-amber-500 focus:ring-2 focus:ring-amber-200 focus:outline-none transition-colors"
               />
               {errors.login && (
-                <p className="text-red-400 text-sm">{errors.login.message}</p>
+                <p className="text-red-500 text-sm">{errors.login.message}</p>
               )}
 
               <input
                 type="password"
                 placeholder="رمز عبور"
                 {...register("password", { required: "رمز عبور الزامی است" })}
-                className="w-full px-4 py-2 rounded bg-gray-900 text-white focus:outline-none"
+                className="w-full px-4 py-3 rounded-lg bg-amber-50 border border-amber-200 text-gray-800 focus:border-amber-500 focus:ring-2 focus:ring-amber-200 focus:outline-none transition-colors"
               />
               {errors.password && (
-                <p className="text-red-400 text-sm">{errors.password.message}</p>
+                <p className="text-red-500 text-sm">{errors.password.message}</p>
               )}
 
               <button
                 type="submit"
-                className="w-full bg-yellow-400 text-black py-2 rounded font-bold hover:opacity-90 transition"
+                className="w-full bg-amber-500 text-white py-3 rounded-lg font-bold hover:bg-amber-600 hover:shadow-lg hover:shadow-amber-300/40 transition-all duration-200"
               >
                 ورود
               </button>
             </form>
 
-            <p className="mt-4 text-center text-gray-400">
+            <p className="mt-4 text-center text-gray-600">
               فراموشی رمز عبور؟{" "}
-              <span className="text-yellow-400 cursor-pointer hover:underline">
+              <span className="text-amber-600 cursor-pointer hover:underline font-medium">
                 کلیک کنید
               </span>
             </p>
 
-            <p className="mt-2 text-center text-gray-400">
+            <p className="mt-2 text-center text-gray-600">
               ثبت‌نام نکردید؟{" "}
               <span
                 onClick={() => setStep(1)}
-                className="text-yellow-400 cursor-pointer hover:underline"
+                className="text-amber-600 cursor-pointer hover:underline font-medium"
               >
                 ثبت‌نام
               </span>

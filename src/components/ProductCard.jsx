@@ -7,35 +7,42 @@ const ProductCard = ({ id, title, price, imgSrc }) => {
   const { addToCart } = useCart();
   const navigate = useNavigate();
 
+  // محاسبه نسبت براساس 294×168 در 1324px
+  const aspectRatio = (168 / 294) * 100; // ≈ 57.14%
+
   return (
-    <div className="bg-[#2a2a2a] p-2 rounded-lg shadow-md hover:shadow-xl transition flex flex-col items-center">
-      {/* دیو دور عکس */}
-      <div className="rounded-md overflow-hidden">
+    <div className="bg-white rounded-xl shadow-lg hover:shadow-2xl transition-all duration-300 flex flex-col border border-amber-100 hover:border-amber-300 hover:shadow-amber-100/50 overflow-hidden w-full">
+      {/* دیو دور عکس - با نسبت ثابت */}
+      <div 
+        className="w-full relative overflow-hidden"
+        style={{ paddingBottom: `${aspectRatio}%` }}
+      >
         <img
           src={imgSrc}
           alt={title}
-          className="w-[206px] h-[250px] object-cover"
+          className="absolute top-0 left-0 w-full h-full object-cover transition-transform duration-300 hover:scale-105"
         />
       </div>
 
-      {/* عنوان و قیمت */}
-      <div className="mt-2 flex flex-col items-center">
-        <h3 className="text-lg font-semibold text-gray-200">{title}</h3>
-        <span className="text-[#FFD700] font-bold mt-1">
+      {/* محتوای محصول */}
+      <div className="p-4 flex flex-col flex-grow">
+        <h3 className="text-lg font-semibold text-gray-800 text-center line-clamp-2 mb-2 flex-grow">
+          {title}
+        </h3>
+        
+        <span className="text-amber-700 font-bold text-xl text-center mb-4">
           {price.toLocaleString()} تومان
         </span>
 
         {/* دکمه‌ها */}
-        <div className="flex space-x-2 mt-3">
-          {/* ✅ رفتن به صفحه جزئیات محصول */}
+        <div className="flex space-x-3">
           <button
             onClick={() => navigate(`/product/${id}`)}
-            className="px-3 py-1 bg-gray-600 text-[#F8c62A] rounded-md hover:scale-105 transition"
+            className="flex-1 px-4 py-2 bg-gray-800 text-amber-400 rounded-lg hover:scale-105 transition-all duration-200 hover:bg-gray-700 hover:shadow-lg hover:shadow-amber-200/30 font-medium"
           >
             دیدن محصول
           </button>
 
-          {/* افزودن به سبد خرید */}
           <button
             onClick={() =>
               addToCart({
@@ -46,7 +53,7 @@ const ProductCard = ({ id, title, price, imgSrc }) => {
                 qty: 1,
               })
             }
-            className="px-3 py-1 bg-[#F8c62A] text-[#ffffff] rounded-md hover:scale-105 transition"
+            className="flex-1 px-4 py-2 bg-amber-500 text-white rounded-lg hover:scale-105 transition-all duration-200 hover:bg-amber-600 hover:shadow-lg hover:shadow-amber-300/40 font-medium"
           >
             افزودن 🛒
           </button>

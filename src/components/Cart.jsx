@@ -1,19 +1,16 @@
 import { useState } from "react";
-import { X, Plus, Minus } from "lucide-react"; // آیکون‌ها
+import { X, Plus, Minus } from "lucide-react";
 
 const Cart = () => {
-  // ✅ داده نمونه (می‌تونی بعداً از Context یا API پرش کنی)
   const [cartItems, setCartItems] = useState([
     { id: 1, name: "مانتو مشکی", price: 300000, quantity: 1, image: "/images/manto.jpg" },
     { id: 2, name: "شلوار جین", price: 200000, quantity: 2, image: "/images/jeans.jpg" },
   ]);
 
-  // ✅ حذف محصول
   const removeItem = (id) => {
     setCartItems(cartItems.filter((item) => item.id !== id));
   };
 
-  // ✅ افزایش تعداد
   const increaseQuantity = (id) => {
     setCartItems(
       cartItems.map((item) =>
@@ -22,7 +19,6 @@ const Cart = () => {
     );
   };
 
-  // ✅ کاهش تعداد
   const decreaseQuantity = (id) => {
     setCartItems(
       cartItems.map((item) =>
@@ -33,60 +29,63 @@ const Cart = () => {
     );
   };
 
-  // ✅ جمع کل
   const totalPrice = cartItems.reduce(
     (acc, item) => acc + item.price * item.quantity,
     0
   );
 
   return (
-    <div className="max-w-lg mx-auto p-6 bg-[#1F1F1F] text-white rounded-lg shadow-lg">
-      <h2 className="text-2xl font-bold mb-4 text-yellow-400">سبد خرید</h2>
+    <div className="max-w-lg mx-auto p-6 bg-white text-gray-800 rounded-xl shadow-lg border border-amber-100">
+      <h2 className="text-2xl font-bold mb-6 text-amber-600 border-b-4 border-amber-500 pb-2">
+        🛒 سبد خرید
+      </h2>
 
       {cartItems.length === 0 ? (
-        <p className="text-gray-400 text-center">سبد خرید شما خالی است</p>
+        <p className="text-gray-500 text-center py-8">سبد خرید شما خالی است</p>
       ) : (
         <div className="space-y-4">
           {cartItems.map((item) => (
             <div
               key={item.id}
-              className="flex items-center justify-between bg-gray-900 rounded-lg p-3 shadow relative"
+              className="flex items-center justify-between bg-amber-50 border border-amber-200 rounded-lg p-4 shadow-sm relative hover:shadow-md transition-all duration-200"
             >
               {/* دکمه حذف */}
               <button
                 onClick={() => removeItem(item.id)}
-                className="absolute top-2 left-2 text-red-500 hover:text-red-700"
+                className="absolute top-3 left-3 text-red-500 hover:text-red-600 transition-colors p-1 rounded-full hover:bg-red-50"
               >
                 <X size={18} />
               </button>
 
               {/* جزئیات محصول */}
-              <div className="flex items-center space-x-3">
+              <div className="flex items-center space-x-4 mr-8">
                 <img
                   src={item.image}
                   alt={item.name}
-                  className="w-16 h-16 rounded object-cover"
+                  className="w-16 h-16 rounded-lg object-cover border border-amber-200"
                 />
                 <div>
-                  <h3 className="font-semibold">{item.name}</h3>
-                  <p className="text-sm text-gray-400">
-                    قیمت: {item.price.toLocaleString()} تومان
+                  <h3 className="font-semibold text-gray-800">{item.name}</h3>
+                  <p className="text-sm text-amber-600 font-medium">
+                    {item.price.toLocaleString()} تومان
                   </p>
                 </div>
               </div>
 
               {/* تعداد */}
-              <div className="flex items-center space-x-2">
+              <div className="flex items-center space-x-3">
                 <button
                   onClick={() => decreaseQuantity(item.id)}
-                  className="bg-gray-700 p-1 rounded hover:bg-gray-600"
+                  className="bg-amber-500 text-white p-1 rounded-lg hover:bg-amber-600 transition-colors shadow-sm"
                 >
                   <Minus size={16} />
                 </button>
-                <span className="px-3">{item.quantity}</span>
+                <span className="px-3 font-bold min-w-8 text-center text-gray-800">
+                  {item.quantity}
+                </span>
                 <button
                   onClick={() => increaseQuantity(item.id)}
-                  className="bg-gray-700 p-1 rounded hover:bg-gray-600"
+                  className="bg-amber-500 text-white p-1 rounded-lg hover:bg-amber-600 transition-colors shadow-sm"
                 >
                   <Plus size={16} />
                 </button>
@@ -95,12 +94,17 @@ const Cart = () => {
           ))}
 
           {/* جمع کل */}
-          <div className="flex justify-between items-center border-t border-gray-700 pt-4">
-            <span className="text-lg font-bold">جمع کل:</span>
-            <span className="text-yellow-400 font-extrabold">
+          <div className="flex justify-between items-center border-t border-amber-200 pt-4 mt-4">
+            <span className="text-lg font-bold text-gray-800">جمع کل:</span>
+            <span className="text-amber-600 font-extrabold text-xl">
               {totalPrice.toLocaleString()} تومان
             </span>
           </div>
+
+          {/* دکمه پرداخت */}
+          <button className="w-full bg-amber-500 text-white py-3 rounded-lg font-bold hover:bg-amber-600 transition-all duration-200 shadow-md hover:shadow-amber-300/40 mt-4">
+            ادامه فرآیند خرید
+          </button>
         </div>
       )}
     </div>

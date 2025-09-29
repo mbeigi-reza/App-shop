@@ -18,15 +18,18 @@ const ProductImages = ({ images }) => {
       <div className="flex justify-center items-center overflow-hidden relative h-80">
         {images.map((img, index) => {
           const isActive = index === currentIndex;
-          const offset = (index - currentIndex) * 40; // فاصله بین تصاویر
+          const offset = (index - currentIndex) * 40;
 
           return (
             <img
               key={index}
               src={img}
               alt={`product-${index}`}
-              className={`absolute transition-all duration-500 rounded-lg shadow-lg cursor-pointer
-                ${isActive ? "scale-100 z-20" : "scale-90 opacity-70 z-10"}
+              className={`absolute transition-all duration-500 rounded-lg shadow-lg cursor-pointer border-2
+                ${isActive 
+                  ? "scale-100 z-20 border-amber-400 shadow-amber-200/50" 
+                  : "scale-90 opacity-70 z-10 border-amber-100"
+                }
               `}
               style={{
                 transform: `translateX(${offset}px)`,
@@ -39,16 +42,31 @@ const ProductImages = ({ images }) => {
       {/* دکمه‌های ناوبری */}
       <button
         onClick={prevImage}
-        className="absolute left-0 top-1/2 -translate-y-1/2 bg-black/50 text-white p-2 rounded-full hover:bg-black"
+        className="absolute left-0 top-1/2 -translate-y-1/2 bg-amber-500 text-white p-3 rounded-full hover:bg-amber-600 hover:scale-110 transition-all duration-200 shadow-lg hover:shadow-amber-300/40"
       >
         <FiChevronLeft size={24} />
       </button>
       <button
         onClick={nextImage}
-        className="absolute right-0 top-1/2 -translate-y-1/2 bg-black/50 text-white p-2 rounded-full hover:bg-black"
+        className="absolute right-0 top-1/2 -translate-y-1/2 bg-amber-500 text-white p-3 rounded-full hover:bg-amber-600 hover:scale-110 transition-all duration-200 shadow-lg hover:shadow-amber-300/40"
       >
         <FiChevronRight size={24} />
       </button>
+
+      {/* ایندیکاتور */}
+      <div className="flex justify-center mt-4 space-x-2">
+        {images.map((_, index) => (
+          <button
+            key={index}
+            onClick={() => setCurrentIndex(index)}
+            className={`w-3 h-3 rounded-full transition-all duration-300 ${
+              index === currentIndex 
+                ? "bg-amber-500 scale-125" 
+                : "bg-amber-200 hover:bg-amber-300"
+            }`}
+          />
+        ))}
+      </div>
     </div>
   );
 };

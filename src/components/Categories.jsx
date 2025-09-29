@@ -17,15 +17,26 @@ const categories = [
 
 const Categories = () => {
   return (
-    <div className="max-w-7xl mx-auto px-4 py-8">
-      <div className="grid grid-cols-3 gap-4 lg:grid-cols-6">
+    <div className="max-w-7xl mx-auto px-4 py-12">
+      <h2 className="text-3xl font-bold mb-8 border-b-4 border-amber-500 pb-2 inline-block text-gray-800">
+        دسته‌بندی‌ها
+      </h2>
+      <div className="grid grid-cols-2 sm:grid-cols-3 lg:grid-cols-6 gap-6">
         {categories.map((cat, index) => (
-          <Link key={index} to={cat.link} className="group block">
-            <img
-              src={cat.img}
-              alt={`category-${index}`}
-              className="w-full aspect-square object-cover rounded-xl transform transition-transform duration-300 group-hover:scale-105"
-            />
+          <Link 
+            key={index} 
+            to={cat.link} 
+            className="group block"
+          >
+            <div className="relative overflow-hidden rounded-xl bg-white border border-amber-100 shadow-sm hover:shadow-xl transition-all duration-300 group-hover:border-amber-300">
+              <img
+                src={cat.img}
+                alt={`category-${index}`}
+                className="w-full aspect-square object-cover transform transition-transform duration-300 group-hover:scale-110"
+              />
+              {/* Overlay طلایی */}
+              <div className="absolute inset-0 bg-gradient-to-t from-amber-500/10 to-transparent opacity-0 group-hover:opacity-100 transition-opacity duration-300"></div>
+            </div>
           </Link>
         ))}
       </div>
