@@ -65,7 +65,7 @@ const Navbar = () => {
         className={`w-full flex justify-between items-center px-4 sm:px-8 p-4 fixed top-0 z-50 transition-all duration-300
         ${
           scrolled
-            ? "bg-white dark:bg-gray-900 shadow-lg border-b border-amber-100 dark:border-gray-700"
+            ? "bg-white dark:bg-gray-900 shadow-lg border-amber-100 dark:border-gray-700"
             : "bg-transparent"
         }`}
       >

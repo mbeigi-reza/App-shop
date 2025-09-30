@@ -16,6 +16,9 @@ import BrandConverse from "./pages/BrandConverse";
 import Register from "./pages/Register";
 import ProductsPage from "./pages/ProductsPage";
 import ProductDetail from "./pages/ProductDetail";
+import FeaturedProducts from "./pages/FeaturedProducts";
+import RecommendedProducts from "./pages/RecommendedProducts";
+// AuthForm رو حذف کردم چون فایلش رو نداری
 
 function App() {
   return (
@@ -58,6 +61,28 @@ function App() {
             <>
               <Header />
               <ProductsPage />
+              <Footer />
+            </>
+          }
+        />
+        
+        {/* صفحات جدید محصولات ویژه و پیشنهادی */}
+        <Route
+          path="/featured-products"
+          element={
+            <>
+              <Header />
+              <FeaturedProducts />
+              <Footer />
+            </>
+          }
+        />
+        <Route
+          path="/recommended-products"
+          element={
+            <>
+              <Header />
+              <RecommendedProducts />
               <Footer />
             </>
           }
