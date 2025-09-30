@@ -42,7 +42,7 @@ const Home = () => {
         <h2 className="text-3xl font-bold mb-8 border-b-4 border-amber-500 dark:border-amber-400 pb-2 inline-block text-gray-800 dark:text-white">
           محصولات ویژه
         </h2>
-        <div className="flex overflow-x-auto gap-6 scrollbar-hide pb-4">
+        <div className="flex gap-6 pb-4 overflow-x-auto custom-scrollbar">
           {featuredProducts.slice(0, 6).map((product, index) => (
             <div key={product.id || index} className="min-w-[280px] flex-shrink-0">
               <ProductCard 
@@ -70,7 +70,7 @@ const Home = () => {
         <h2 className="text-3xl font-bold mb-8 border-b-4 border-amber-500 dark:border-amber-400 pb-2 inline-block text-gray-800 dark:text-white">
           محصولات پیشنهادی
         </h2>
-        <div className="flex overflow-x-auto gap-6 scrollbar-hide pb-4">
+        <div className="flex gap-6 pb-4 overflow-x-auto custom-scrollbar">
           {featuredProducts.slice(0, 6).map((product, index) => (
             <div key={product.id || index} className="min-w-[280px] flex-shrink-0">
               <ProductCard 

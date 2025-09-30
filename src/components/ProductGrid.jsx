@@ -1,6 +1,7 @@
 import React, { useState } from "react";
 import ProductCard from "./ProductCard";
-import img1 from "../images/product1.png";
+
+
 import img2 from "../images/product2.png";
 import img3 from "../images/product3.png";
 import img4 from "../images/product4.png";

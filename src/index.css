@@ -1,3 +1,47 @@
 @tailwind base;
 @tailwind components;
 @tailwind utilities;
+
+/* شخصی‌سازی نوار اسکرول */
+@layer base {
+  /* برای مرورگرهای Webkit (Chrome, Safari, Edge) */
+  ::-webkit-scrollbar {
+    width: 8px;
+    height: 8px;
+  }
+
+  ::-webkit-scrollbar-track {
+    background: #fef3c7; /* amber-100 */
+  }
+
+  .dark ::-webkit-scrollbar-track {
+    background: #1f2937; /* gray-800 */
+  }
+
+  ::-webkit-scrollbar-thumb {
+    background: #f59e0b; /* amber-500 */
+    border-radius: 4px;
+  }
+
+  .dark ::-webkit-scrollbar-thumb {
+    background: #d97706; /* amber-600 */
+  }
+
+  ::-webkit-scrollbar-thumb:hover {
+    background: #d97706; /* amber-600 */
+  }
+
+  .dark ::-webkit-scrollbar-thumb:hover {
+    background: #b45309; /* amber-700 */
+  }
+
+  /* برای مرورگرهای Firefox */
+  html {
+    scrollbar-width: thin;
+    scrollbar-color: #f59e0b #fef3c7;
+  }
+
+  html.dark {
+    scrollbar-color: #d97706 #1f2937;
+  }
+}
