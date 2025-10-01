@@ -24,3 +24,5 @@ export const featuredProducts = [
   { imgSrc: featured2, title: "ویژه 2", caption: "کپشن ویژه 2", price: "270,000 تومان" },
   { imgSrc: featured3, title: "ویژه 3", caption: "کپشن ویژه 3", price: "300,000 تومان" },
 ];
+
+

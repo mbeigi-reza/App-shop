@@ -1,18 +1,19 @@
 import { Link } from "react-router-dom";
-import img1 from "../images/category1.png";
-import img2 from "../images/category2.png";
-import img3 from "../images/category3.png";
-import img4 from "../images/category4.png";
-import img5 from "../images/category5.png";
-import img6 from "../images/category6.png";
+
+import skateboardImg from "../images/categories/skateboard.jpg";
+import inlineSkateImg from "../images/categories/inline-skates.jpg";
+import surfboardImg from "../images/categories/surfboard.jpg";
+import heelysImg from "../images/categories/heelys.jpg";
+import iceSkateImg from "../images/categories/ice-skate.jpg";
+import accessoriesImg from "../images/categories/accessories.jpg";
 
 const categories = [
-  { img: img1, link: "/brand/nike" },
-  { img: img2, link: "/brand/adidas" },
-  { img: img3, link: "/brand/puma" },
-  { img: img4, link: "/brand/reebok" },
-  { img: img5, link: "/brand/nb" },
-  { img: img6, link: "/brand/converse" },
+  { img: skateboardImg, link: "/skateboard", },
+  { img: inlineSkateImg, link: "/inline-skates",},
+  { img: surfboardImg, link: "/surfboard",},
+  { img: heelysImg, link: "/heelys",},
+  { img: iceSkateImg, link: "/ice-skates",},
+  { img: accessoriesImg, link: "/accessories",},
 ];
 
 const Categories = () => {
@@ -31,12 +32,13 @@ const Categories = () => {
             <div className="relative overflow-hidden rounded-xl bg-white dark:bg-gray-800 border border-amber-100 dark:border-gray-700 shadow-sm hover:shadow-xl dark:hover:shadow-gray-700/30 transition-all duration-300 group-hover:border-amber-300 dark:group-hover:border-amber-500">
               <img
                 src={cat.img}
-                alt={`category-${index}`}
+                alt={cat.name}
                 className="w-full aspect-square object-cover transform transition-transform duration-300 group-hover:scale-110"
               />
               {/* Overlay طلایی */}
               <div className="absolute inset-0 bg-gradient-to-t from-amber-500/10 dark:from-amber-400/10 to-transparent opacity-0 group-hover:opacity-100 transition-opacity duration-300"></div>
             </div>
+            <p className="text-center mt-2 text-gray-700 dark:text-gray-300 font-medium">{cat.name}</p>
           </Link>
         ))}
       </div>

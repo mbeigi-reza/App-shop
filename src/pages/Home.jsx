@@ -3,9 +3,12 @@ import React from "react";
 import { Link } from "react-router-dom";
 import Categories from "../components/Categories";
 import ProductCard from "../components/ProductCard";
-import { initialProducts, featuredProducts } from "../data/products";
+import { getRandomProducts, featuredProducts, recommendedProducts } from "../data/allProducts";
 
 const Home = () => {
+  // این خط رو اضافه کن
+  const randomProducts = getRandomProducts(6);
+
   return (
     <div className="bg-amber-50 dark:bg-gray-900 min-h-screen text-gray-800 dark:text-white">
       {/* دسته‌بندی‌ها */}
@@ -16,17 +19,21 @@ const Home = () => {
         <h2 className="text-3xl font-bold mb-8 border-b-4 border-amber-500 dark:border-amber-400 pb-2 inline-block text-gray-800 dark:text-white">
           محصولات ما
         </h2>
+        
+        {/* این بخش رو عوض کن */}
         <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 xl:grid-cols-3 gap-8">
-          {initialProducts.map((product, index) => (
+          {randomProducts.map((product) => (
             <ProductCard 
-              key={product.id || index}
+              key={product.id}
               id={product.id}
               title={product.title}
+              caption={product.caption}
               price={product.price}
-              imgSrc={product.img}
+              imgSrc={product.imgSrc}
             />
           ))}
         </div>
+
         <div className="text-center mt-8">
           <Link
             to="/products"
@@ -43,13 +50,14 @@ const Home = () => {
           محصولات ویژه
         </h2>
         <div className="flex gap-6 pb-4 overflow-x-auto custom-scrollbar">
-          {featuredProducts.slice(0, 6).map((product, index) => (
-            <div key={product.id || index} className="min-w-[280px] flex-shrink-0">
+          {featuredProducts.slice(0, 6).map((product) => (
+            <div key={product.id} className="min-w-[280px] flex-shrink-0">
               <ProductCard 
                 id={product.id}
                 title={product.title}
+                caption={product.caption}
                 price={product.price}
-                imgSrc={product.img}
+                imgSrc={product.imgSrc}
               />
             </div>
           ))}
@@ -71,13 +79,14 @@ const Home = () => {
           محصولات پیشنهادی
         </h2>
         <div className="flex gap-6 pb-4 overflow-x-auto custom-scrollbar">
-          {featuredProducts.slice(0, 6).map((product, index) => (
-            <div key={product.id || index} className="min-w-[280px] flex-shrink-0">
+          {recommendedProducts.slice(0, 6).map((product) => (
+            <div key={product.id} className="min-w-[280px] flex-shrink-0">
               <ProductCard 
                 id={product.id}
                 title={product.title}
+                caption={product.caption}
                 price={product.price}
-                imgSrc={product.img}
+                imgSrc={product.imgSrc}
               />
             </div>
           ))}

@@ -1,24 +1,21 @@
 // src/App.jsx
 import { BrowserRouter as Router, Routes, Route } from "react-router-dom";
 import Home from "./pages/Home";
-import Manto from "./pages/Manto";
-import Shalvar from "./pages/Shalvar";
 import Header from "./components/Header";
 import Footer from "./components/Footer";
-
-import BrandNike from "./pages/BrandNike";
-import BrandAdidas from "./pages/BrandAdidas";
-import BrandPuma from "./pages/BrandPuma";
-import BrandReebok from "./pages/BrandReebok";
-import BrandNB from "./pages/BrandNB";
-import BrandConverse from "./pages/BrandConverse";
 
 import Register from "./pages/Register";
 import ProductsPage from "./pages/ProductsPage";
 import ProductDetail from "./pages/ProductDetail";
 import FeaturedProducts from "./pages/FeaturedProducts";
 import RecommendedProducts from "./pages/RecommendedProducts";
-// AuthForm رو حذف کردم چون فایلش رو نداری
+
+import Skateboard from "./pages/Skateboard";
+import InlineSkates from "./pages/InlineSkates";
+import Surfboard from "./pages/Surfboard";
+import Heelys from "./pages/Heelys";
+import IceSkates from "./pages/IceSkates";
+import Accessories from "./pages/Accessories";
 
 function App() {
   return (
@@ -31,26 +28,6 @@ function App() {
             <>
               <Header />
               <Home />
-              <Footer />
-            </>
-          }
-        />
-        <Route
-          path="/manto"
-          element={
-            <>
-              <Header />
-              <Manto />
-              <Footer />
-            </>
-          }
-        />
-        <Route
-          path="/shalvar"
-          element={
-            <>
-              <Header />
-              <Shalvar />
               <Footer />
             </>
           }
@@ -88,63 +65,63 @@ function App() {
           }
         />
 
-        {/* برندها */}
+        {/* صفحات جدید اسکیت */}
         <Route
-          path="/brand/nike"
+          path="/skateboard"
           element={
             <>
               <Header />
-              <BrandNike />
+              <Skateboard />
               <Footer />
             </>
           }
         />
         <Route
-          path="/brand/adidas"
+          path="/inline-skates"
           element={
             <>
               <Header />
-              <BrandAdidas />
+              <InlineSkates />
               <Footer />
             </>
           }
         />
         <Route
-          path="/brand/puma"
+          path="/surfboard"
           element={
             <>
               <Header />
-              <BrandPuma />
+              <Surfboard />
               <Footer />
             </>
           }
         />
         <Route
-          path="/brand/reebok"
+          path="/heelys"
           element={
             <>
               <Header />
-              <BrandReebok />
+              <Heelys />
               <Footer />
             </>
           }
         />
         <Route
-          path="/brand/nb"
+          path="/ice-skates"
           element={
             <>
               <Header />
-              <BrandNB />
+              <IceSkates />
               <Footer />
             </>
           }
         />
         <Route
-          path="/brand/converse"
+          path="/accessories"
           element={
             <>
               <Header />
-              <BrandConverse />
+              <Accessories />
               <Footer />
             </>
           }

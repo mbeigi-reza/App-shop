@@ -1,7 +1,9 @@
 // src/pages/ProductDetail.jsx
-import { useState } from "react";
+import { useState, useEffect } from "react";
 import { useParams } from "react-router-dom";
 import { FiPlus, FiMinus, FiChevronLeft, FiChevronRight } from "react-icons/fi";
+import { getProductById, getRandomProducts } from "../data/allProducts";
+import ProductCard from "../components/ProductCard";
 
 const ProductDetail = () => {
   const { id } = useParams();
@@ -9,24 +11,39 @@ const ProductDetail = () => {
   const [currentIndex, setCurrentIndex] = useState(0);
   const [selectedSize, setSelectedSize] = useState("");
   const [selectedColor, setSelectedColor] = useState("");
+  const [product, setProduct] = useState(null);
+  const [relatedProducts, setRelatedProducts] = useState([]);
 
-  // نمونه محصول
-  const product = {
-    id,
-    name: "مانتو تابستانی",
-    description:
-      "یک مانتوی شیک و راحت برای فصل تابستان. ساخته شده از پارچه خنک و با کیفیت.",
-    price: 320000,
-    oldPrice: 400000,
-    images: [
-      "https://via.placeholder.com/400x400?text=1",
-      "https://via.placeholder.com/400x400/aaa?text=2",
-      "https://via.placeholder.com/400x400/f55?text=3",
-      "https://via.placeholder.com/400x400/0af?text=4",
-    ],
-    sizes: ["S", "M", "L", "XL"],
-    colors: ["مشکی", "سفید", "طلایی"],
-  };
+  useEffect(() => {
+    // دریافت محصول از allProducts بر اساس ID
+    const foundProduct = getProductById(parseInt(id));
+    if (foundProduct) {
+      setProduct(foundProduct);
+      
+      // ایجاد تصاویر مختلف برای گالری (با استفاده از عکس اصلی و چند عکس مشابه)
+      const productImages = [
+        foundProduct.imgSrc,
+        foundProduct.imgSrc, // در واقعیت عکس‌های مختلف محصول رو میذاری
+        foundProduct.imgSrc,
+        foundProduct.imgSrc,
+      ];
+      setProduct(prev => ({ ...prev, images: productImages }));
+      
+      // محصولات مرتبط از همون دسته‌بندی
+      const related = getRandomProducts(4).filter(p => 
+        p.category === foundProduct.category && p.id !== foundProduct.id
+      );
+      setRelatedProducts(related);
+    }
+  }, [id]);
+
+  if (!product) {
+    return (
+      <div className="min-h-screen bg-white dark:bg-gray-900 flex items-center justify-center">
+        <p className="text-gray-600 dark:text-gray-300">محصول یافت نشد</p>
+      </div>
+    );
+  }
 
   // تغییر عکس‌ها
   const prevImage = () => {
@@ -34,11 +51,16 @@ const ProductDetail = () => {
       prev === 0 ? product.images.length - 1 : prev - 1
     );
   };
+  
   const nextImage = () => {
     setCurrentIndex((prev) =>
       prev === product.images.length - 1 ? 0 : prev + 1
     );
   };
+
+  // سایزها و رنگ‌های مناسب محصولات ورزشی
+  const sizes = ["S (34-36)", "M (38-40)", "L (42-44)", "XL (46-48)"];
+  const colors = ["مشکی", "سفید", "آبی", "قرمز", "سبز"];
 
   return (
     <div className="min-h-screen bg-white dark:bg-gray-900 text-gray-800 dark:text-white p-6">
@@ -54,7 +76,7 @@ const ProductDetail = () => {
                 <img
                   key={index}
                   src={img}
-                  alt={`product-${index}`}
+                  alt={`${product.title} - تصویر ${index + 1}`}
                   className={`absolute transition-all duration-500 rounded-lg shadow-lg cursor-pointer border-2
                   ${
                     isActive 
@@ -102,8 +124,23 @@ const ProductDetail = () => {
 
         {/* بخش اطلاعات محصول */}
         <div className="space-y-6">
-          <h1 className="text-3xl font-bold text-amber-600 dark:text-amber-400">{product.name}</h1>
-          <p className="text-gray-600 dark:text-gray-300 leading-relaxed">{product.description}</p>
+          <h1 className="text-3xl font-bold text-amber-600 dark:text-amber-400">{product.title}</h1>
+          <p className="text-gray-600 dark:text-gray-300 leading-relaxed">{product.caption}</p>
+
+          {/* اطلاعات فنی */}
+          <div className="bg-amber-50 dark:bg-gray-800 p-4 rounded-lg">
+            <h3 className="font-semibold text-amber-700 dark:text-amber-400 mb-2">مشخصات فنی:</h3>
+            <ul className="text-sm text-gray-600 dark:text-gray-300 space-y-1">
+              <li>• دسته‌بندی: {product.category === "skateboard" ? "اسکیت برد" : 
+                               product.category === "inline-skates" ? "اسکیت اینلاین" :
+                               product.category === "surfboard" ? "تخته موج‌سواری" :
+                               product.category === "heelys" ? "کفش چرخ‌دار" :
+                               product.category === "ice-skates" ? "اسکیت روی یخ" : "لوازم جانبی"}</li>
+              <li>• مناسب برای: {product.category === "skateboard" ? "حرکات آکروباتیک و شهری" :
+                                product.category.includes("skate") ? "ورزش و تفریح" : "استفاده عمومی"}</li>
+              <li>• گارانتی: 6 ماه</li>
+            </ul>
+          </div>
 
           {/* قیمت */}
           <div className="flex items-center gap-4">
@@ -120,8 +157,8 @@ const ProductDetail = () => {
           {/* انتخاب سایز */}
           <div>
             <p className="font-semibold text-gray-700 dark:text-gray-300 mb-3">سایز:</p>
-            <div className="flex gap-2">
-              {product.sizes.map((size) => (
+            <div className="flex gap-2 flex-wrap">
+              {sizes.map((size) => (
                 <button
                   key={size}
                   onClick={() => setSelectedSize(size)}
@@ -140,8 +177,8 @@ const ProductDetail = () => {
           {/* انتخاب رنگ */}
           <div>
             <p className="font-semibold text-gray-700 dark:text-gray-300 mb-3">رنگ:</p>
-            <div className="flex gap-2">
-              {product.colors.map((color) => (
+            <div className="flex gap-2 flex-wrap">
+              {colors.map((color) => (
                 <button
                   key={color}
                   onClick={() => setSelectedColor(color)}
@@ -188,12 +225,16 @@ const ProductDetail = () => {
       <div className="max-w-5xl mx-auto mt-12">
         <h2 className="text-2xl font-bold mb-6 border-b-4 border-amber-500 dark:border-amber-400 pb-2 inline-block dark:text-white">نظرات کاربران</h2>
         <div className="bg-amber-50 dark:bg-gray-800 border border-amber-200 dark:border-gray-700 p-4 rounded-lg mb-4">
-          <p className="font-semibold text-amber-700 dark:text-amber-400">کاربر علی</p>
-          <p className="text-gray-600 dark:text-gray-300 mt-1">خیلی کیفیت خوبی داشت 👍</p>
+          <p className="font-semibold text-amber-700 dark:text-amber-400">کاربر محمد</p>
+          <p className="text-gray-600 dark:text-gray-300 mt-1">کیفیت ساخت عالی داره، واقعاً راضی هستم! 🚀</p>
+        </div>
+        <div className="bg-amber-50 dark:bg-gray-800 border border-amber-200 dark:border-gray-700 p-4 rounded-lg mb-4">
+          <p className="font-semibold text-amber-700 dark:text-amber-400">کاربر سارا</p>
+          <p className="text-gray-600 dark:text-gray-300 mt-1">مناسب برای مبتدیان، یادگیری باهاش راحت بود 👍</p>
         </div>
         <div className="bg-white dark:bg-gray-800 border border-amber-200 dark:border-gray-700 rounded-lg p-4">
           <textarea
-            placeholder="نظر خود را بنویسید..."
+            placeholder="نظر خود را درباره این محصول بنویسید..."
             className="w-full p-3 rounded-lg bg-amber-50 dark:bg-gray-700 border border-amber-200 dark:border-gray-600 text-gray-800 dark:text-white focus:border-amber-500 dark:focus:border-amber-400 focus:ring-2 focus:ring-amber-200 dark:focus:ring-amber-500/30 focus:outline-none transition-colors"
             rows="4"
           />
@@ -206,20 +247,16 @@ const ProductDetail = () => {
       {/* محصولات مرتبط */}
       <div className="max-w-5xl mx-auto mt-12">
         <h2 className="text-2xl font-bold mb-6 border-b-4 border-amber-500 dark:border-amber-400 pb-2 inline-block dark:text-white">محصولات مرتبط</h2>
-        <div className="grid grid-cols-2 md:grid-cols-4 gap-6">
-          {[1, 2, 3, 4].map((item) => (
-            <div
-              key={item}
-              className="bg-white dark:bg-gray-800 border border-amber-100 dark:border-gray-700 p-4 rounded-xl shadow-sm hover:shadow-lg dark:hover:shadow-gray-700/30 hover:border-amber-300 dark:hover:border-amber-500 transition-all duration-300 flex flex-col items-center"
-            >
-              <img
-                src="https://via.placeholder.com/150"
-                alt="محصول مرتبط"
-                className="rounded-lg mb-3 border border-amber-200 dark:border-gray-600"
-              />
-              <p className="text-sm font-medium text-gray-800 dark:text-white text-center">محصول شماره {item}</p>
-              <span className="text-amber-600 dark:text-amber-400 font-bold mt-2">200,000 تومان</span>
-            </div>
+        <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-6">
+          {relatedProducts.map((relatedProduct) => (
+            <ProductCard
+              key={relatedProduct.id}
+              id={relatedProduct.id}
+              title={relatedProduct.title}
+              caption={relatedProduct.caption}
+              price={relatedProduct.price}
+              imgSrc={relatedProduct.imgSrc}
+            />
           ))}
         </div>
       </div>
