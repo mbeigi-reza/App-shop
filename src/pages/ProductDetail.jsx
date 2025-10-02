@@ -1,7 +1,6 @@
 // src/pages/ProductDetail.jsx
-import { useState, useEffect } from "react";
-
-import { useParams, useNavigate } from "react-router-dom";
+import { useState, useEffect, useLayoutEffect } from "react";
+import { useParams, useNavigate, useLocation } from "react-router-dom";
 import { FiPlus, FiMinus, FiChevronLeft, FiChevronRight, FiZoomIn } from "react-icons/fi";
 import { ToastContainer, toast } from "react-toastify";
 import "react-toastify/dist/ReactToastify.css";
@@ -47,6 +46,7 @@ const getCategoryImages = (category) => {
 const ProductDetail = () => {
   const { id } = useParams();
   const navigate = useNavigate();
+  const location = useLocation();
   const { addToCart, removeFromCart, updateQty } = useCart();
   const [quantity, setQuantity] = useState(0);
   const [currentIndex, setCurrentIndex] = useState(0);
@@ -56,6 +56,15 @@ const ProductDetail = () => {
   const [productImages, setProductImages] = useState([]);
   const [isZoomed, setIsZoomed] = useState(false);
   const [zoomPosition, setZoomPosition] = useState({ x: 0, y: 0 });
+
+  // اسکرول به بالای صفحه وقتی کامپوننت mount شد
+  useLayoutEffect(() => {
+    window.scrollTo({
+      top: 0,
+      left: 0,
+      behavior: 'smooth'
+    });
+  }, [location.pathname]);
 
   // توابع اعلان‌های طلایی - هماهنگ با تم سایت
   const showSuccess = (message) =>
@@ -526,11 +535,12 @@ const ProductDetail = () => {
             ))}
           </div>
         </div>
+
+        {/* بخش نظرات */}
+        <div className="max-w-6xl mx-auto mt-12 lg:mt-16">
+          <CommentSection productId={id} />
+        </div>
       </div>
-      {/* بخش نظرات */}
-      <div className="max-w-6xl mx-auto mt-12 lg:mt-16">
-       <CommentSection productId={id} />
-     </div>
     </Layout>
   );
 };
