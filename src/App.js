@@ -1,5 +1,5 @@
 // src/App.jsx
-import { BrowserRouter as Router, Routes, Route } from "react-router-dom";
+import { Routes, Route } from "react-router-dom";
 import Home from "./pages/Home";
 import Header from "./components/Header";
 import Footer from "./components/Footer";
@@ -21,141 +21,139 @@ import About from "./pages/About";
 
 function App() {
   return (
-    <Router>
-      <Routes>
-        {/* صفحات معمولی با Header و Footer */}
-        <Route
-          path="/"
-          element={
-            <>
-              <Header />
-              <Home />
-              <Footer />
-            </>
-          }
-        />
-        <Route
-          path="/products"
-          element={
-            <>
-              <Header />
-              <ProductsPage />
-              <Footer />
-            </>
-          }
-        />
-        
-        {/* صفحات جدید محصولات ویژه و پیشنهادی */}
-        <Route
-          path="/featured-products"
-          element={
-            <>
-              <Header />
-              <FeaturedProducts />
-              <Footer />
-            </>
-          }
-        />
-        <Route
-          path="/recommended-products"
-          element={
-            <>
-              <Header />
-              <RecommendedProducts />
-              <Footer />
-            </>
-          }
-        />
+    <Routes>
+      {/* صفحات معمولی با Header و Footer */}
+      <Route
+        path="/"
+        element={
+          <>
+            <Header />
+            <Home />
+            <Footer />
+          </>
+        }
+      />
+      <Route
+        path="/products"
+        element={
+          <>
+            <Header />
+            <ProductsPage />
+            <Footer />
+          </>
+        }
+      />
+      
+      {/* صفحات جدید محصولات ویژه و پیشنهادی */}
+      <Route
+        path="/featured-products"
+        element={
+          <>
+            <Header />
+            <FeaturedProducts />
+            <Footer />
+          </>
+        }
+      />
+      <Route
+        path="/recommended-products"
+        element={
+          <>
+            <Header />
+            <RecommendedProducts />
+            <Footer />
+          </>
+        }
+      />
 
-        {/* صفحات جدید اسکیت */}
-        <Route
-          path="/skateboard"
-          element={
-            <>
-              <Header />
-              <Skateboard />
-              <Footer />
-            </>
-          }
-        />
-        <Route
-          path="/inline-skates"
-          element={
-            <>
-              <Header />
-              <InlineSkates />
-              <Footer />
-            </>
-          }
-        />
-        <Route
-          path="/surfboard"
-          element={
-            <>
-              <Header />
-              <Surfboard />
-              <Footer />
-            </>
-          }
-        />
-        <Route
-          path="/heelys"
-          element={
-            <>
-              <Header />
-              <Heelys />
-              <Footer />
-            </>
-          }
-        />
-        <Route
-          path="/ice-skates"
-          element={
-            <>
-              <Header />
-              <IceSkates />
-              <Footer />
-            </>
-          }
-        />
-        <Route
-          path="/accessories"
-          element={
-            <>
-              <Header />
-              <Accessories />
-              <Footer />
-            </>
-          }
-        />
+      {/* صفحات جدید اسکیت */}
+      <Route
+        path="/skateboard"
+        element={
+          <>
+            <Header />
+            <Skateboard />
+            <Footer />
+          </>
+        }
+      />
+      <Route
+        path="/inline-skates"
+        element={
+          <>
+            <Header />
+            <InlineSkates />
+            <Footer />
+          </>
+        }
+      />
+      <Route
+        path="/surfboard"
+        element={
+          <>
+            <Header />
+            <Surfboard />
+            <Footer />
+          </>
+        }
+      />
+      <Route
+        path="/heelys"
+        element={
+          <>
+            <Header />
+            <Heelys />
+            <Footer />
+          </>
+        }
+      />
+      <Route
+        path="/ice-skates"
+        element={
+          <>
+            <Header />
+            <IceSkates />
+            <Footer />
+          </>
+        }
+      />
+      <Route
+        path="/accessories"
+        element={
+          <>
+            <Header />
+            <Accessories />
+            <Footer />
+          </>
+        }
+      />
 
-        {/* صفحه درباره ما */}
-        <Route
-          path="/about"
-          element={
-            <>
-              <Header />
-              <About />
-              <Footer />
-            </>
-          }
-        />
+      {/* صفحه درباره ما */}
+      <Route
+        path="/about"
+        element={
+          <>
+            <Header />
+            <About />
+            <Footer />
+          </>
+        }
+      />
 
-        {/* صفحه ثبت نام بدون Header */}
-        <Route path="/register" element={<Register />} />
+      {/* صفحه ثبت نام بدون Header */}
+      <Route path="/register" element={<Register />} />
 
-        {/* صفحه جزئیات محصول با Footer ولی بدون Header */}
-        <Route
-          path="/product/:id"
-          element={
-            <>
-              <ProductDetail />
-              <Footer />
-            </>
-          }
-        />
-      </Routes>
-    </Router>
+      {/* صفحه جزئیات محصول با Footer ولی بدون Header */}
+      <Route
+        path="/product/:id"
+        element={
+          <>
+            <ProductDetail />
+            <Footer />
+          </>
+        }
+      />
+    </Routes>
   );
 }
 

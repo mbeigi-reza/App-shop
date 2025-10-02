@@ -9,7 +9,7 @@ const root = ReactDOM.createRoot(document.getElementById("root"));
 root.render(
   <React.StrictMode>
     <CartProvider>
-      <HashRouter>   {/* ⬅️ اینجا اضافه شد */}
+      <HashRouter>
         <App />
       </HashRouter>
     </CartProvider>
