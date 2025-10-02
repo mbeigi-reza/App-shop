@@ -36,7 +36,7 @@ const Carousel = () => {
       <div className="absolute top-1/2 left-1/2 transform -translate-x-1/2 -translate-y-1/2 text-center z-20 w-full px-4">
         <h1 className="text-5xl md:text-7xl lg:text-8xl font-bold text-gray-800 dark:text-white mb-4 drop-shadow-lg leading-tight">
           <span className="bg-gradient-to-l from-amber-500 to-amber-700 dark:from-amber-400 dark:to-amber-600 bg-clip-text text-transparent">
-            استایل نو
+           اسپرت لند
           </span>
         </h1>
         <p className="text-xl md:text-2xl text-gray-600 dark:text-gray-400 drop-shadow-md">
