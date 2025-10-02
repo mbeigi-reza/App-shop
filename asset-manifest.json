@@ -1,7 +1,7 @@
 {
   "files": {
     "main.css": "/App-shop/static/css/main.e793eee7.css",
-    "main.js": "/App-shop/static/js/main.0e0816fd.js",
+    "main.js": "/App-shop/static/js/main.c388189b.js",
     "static/media/Untitled3.jpg": "/App-shop/static/media/Untitled3.deb84539cc12afbc49c5.jpg",
     "static/media/Untitled1.jpg": "/App-shop/static/media/Untitled1.525c14831b628d0a1b3f.jpg",
     "static/media/Untitled2.jpg": "/App-shop/static/media/Untitled2.73f1eef424785f1b9863.jpg",
@@ -91,10 +91,10 @@
     "static/media/iceSkate3.jpg": "/App-shop/static/media/iceSkate3.bf89599c4aa0279707a1.jpg",
     "index.html": "/App-shop/index.html",
     "main.e793eee7.css.map": "/App-shop/static/css/main.e793eee7.css.map",
-    "main.0e0816fd.js.map": "/App-shop/static/js/main.0e0816fd.js.map"
+    "main.c388189b.js.map": "/App-shop/static/js/main.c388189b.js.map"
   },
   "entrypoints": [
     "static/css/main.e793eee7.css",
-    "static/js/main.0e0816fd.js"
+    "static/js/main.c388189b.js"
   ]
 }
