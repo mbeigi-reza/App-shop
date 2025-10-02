@@ -1,7 +1,7 @@
 {
   "files": {
-    "main.css": "/App-shop/static/css/main.14514df7.css",
-    "main.js": "/App-shop/static/js/main.7f538529.js",
+    "main.css": "/App-shop/static/css/main.0446d618.css",
+    "main.js": "/App-shop/static/js/main.968cb7ea.js",
     "static/media/Untitled3.jpg": "/App-shop/static/media/Untitled3.deb84539cc12afbc49c5.jpg",
     "static/media/Untitled1.jpg": "/App-shop/static/media/Untitled1.525c14831b628d0a1b3f.jpg",
     "static/media/Untitled2.jpg": "/App-shop/static/media/Untitled2.73f1eef424785f1b9863.jpg",
@@ -91,11 +91,11 @@
     "static/media/iceSkate6.jpg": "/App-shop/static/media/iceSkate6.1607d1cf2537637f463b.jpg",
     "static/media/iceSkate3.jpg": "/App-shop/static/media/iceSkate3.bf89599c4aa0279707a1.jpg",
     "index.html": "/App-shop/index.html",
-    "main.14514df7.css.map": "/App-shop/static/css/main.14514df7.css.map",
-    "main.7f538529.js.map": "/App-shop/static/js/main.7f538529.js.map"
+    "main.0446d618.css.map": "/App-shop/static/css/main.0446d618.css.map",
+    "main.968cb7ea.js.map": "/App-shop/static/js/main.968cb7ea.js.map"
   },
   "entrypoints": [
-    "static/css/main.14514df7.css",
-    "static/js/main.7f538529.js"
+    "static/css/main.0446d618.css",
+    "static/js/main.968cb7ea.js"
   ]
 }
