@@ -1,7 +1,7 @@
 {
   "files": {
-    "main.css": "/App-shop/static/css/main.e793eee7.css",
-    "main.js": "/App-shop/static/js/main.e08876ea.js",
+    "main.css": "/App-shop/static/css/main.14514df7.css",
+    "main.js": "/App-shop/static/js/main.7f538529.js",
     "static/media/Untitled3.jpg": "/App-shop/static/media/Untitled3.deb84539cc12afbc49c5.jpg",
     "static/media/Untitled1.jpg": "/App-shop/static/media/Untitled1.525c14831b628d0a1b3f.jpg",
     "static/media/Untitled2.jpg": "/App-shop/static/media/Untitled2.73f1eef424785f1b9863.jpg",
@@ -14,6 +14,7 @@
     "static/media/surfboard6.jpg": "/App-shop/static/media/surfboard6.4f683d5e8b097edeb12e.jpg",
     "static/media/skateboard23.jpg": "/App-shop/static/media/skateboard23.fdf4881ea60a1117c9d3.jpg",
     "static/media/surfboard4.jpg": "/App-shop/static/media/surfboard4.a3b4df9e0b5cb6b9fe28.jpg",
+    "static/media/Almas.ttf": "/App-shop/static/media/Almas.759ec330d530b032d698.ttf",
     "static/media/skateboard15.jpg": "/App-shop/static/media/skateboard15.07f7d899e4d4aca01a9e.jpg",
     "static/media/skateboard7.jpg": "/App-shop/static/media/skateboard7.29d8993a190618cb3af7.jpg",
     "static/media/skateboard1.jpg": "/App-shop/static/media/skateboard1.1ed3cc4c49105dee09e0.jpg",
@@ -90,11 +91,11 @@
     "static/media/iceSkate6.jpg": "/App-shop/static/media/iceSkate6.1607d1cf2537637f463b.jpg",
     "static/media/iceSkate3.jpg": "/App-shop/static/media/iceSkate3.bf89599c4aa0279707a1.jpg",
     "index.html": "/App-shop/index.html",
-    "main.e793eee7.css.map": "/App-shop/static/css/main.e793eee7.css.map",
-    "main.e08876ea.js.map": "/App-shop/static/js/main.e08876ea.js.map"
+    "main.14514df7.css.map": "/App-shop/static/css/main.14514df7.css.map",
+    "main.7f538529.js.map": "/App-shop/static/js/main.7f538529.js.map"
   },
   "entrypoints": [
-    "static/css/main.e793eee7.css",
-    "static/js/main.e08876ea.js"
+    "static/css/main.14514df7.css",
+    "static/js/main.7f538529.js"
   ]
 }
