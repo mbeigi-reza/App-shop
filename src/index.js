@@ -2,13 +2,16 @@ import React from "react";
 import ReactDOM from "react-dom/client";
 import "./index.css";
 import App from "./App";
-import { CartProvider } from "./context/CartContext"; // ⬅️ اینو اضافه کن
+import { CartProvider } from "./context/CartContext";
+import { HashRouter } from "react-router-dom";
 
 const root = ReactDOM.createRoot(document.getElementById("root"));
 root.render(
   <React.StrictMode>
-    <CartProvider>   {/* ⬅️ اینجا کل اپ رو پیچیدیم */}
-      <App />
+    <CartProvider>
+      <HashRouter>   {/* ⬅️ اینجا اضافه شد */}
+        <App />
+      </HashRouter>
     </CartProvider>
   </React.StrictMode>
 );
