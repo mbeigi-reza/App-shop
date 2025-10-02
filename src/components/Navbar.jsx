@@ -1,24 +1,54 @@
-// src/components/Navbar.jsx
 import { useState, useEffect } from "react";
 import { Link, useNavigate } from "react-router-dom";
 import {
   FiShoppingCart,
   FiUser,
-  FiChevronLeft,
   FiX,
   FiSun,
-  FiMoon
+  FiMoon,
+  FiLogOut,
+  FiHome,
+  FiInfo,
+  FiChevronDown,
+  FiGrid
 } from "react-icons/fi";
 import { useCart } from "../context/CartContext";
+
+// هوک مدیریت کاربر
+const useAuth = () => {
+  const [user, setUser] = useState(null);
+
+  useEffect(() => {
+    const currentUser = {
+      id: 3,
+      username: "admin",
+      name: "مدیر سایت",
+      email: "admin@shop.com",
+      role: "admin",
+      avatar: ""
+    };
+    setUser(currentUser);
+  }, []);
+
+  const logout = () => {
+    setUser(null);
+    localStorage.removeItem('currentUser');
+  };
+
+  return { user, logout };
+};
 
 const Navbar = () => {
   const [isOpen, setIsOpen] = useState(false);
   const [scrolled, setScrolled] = useState(false);
   const [cartOpen, setCartOpen] = useState(false);
   const [darkMode, setDarkMode] = useState(false);
+  const [categoriesOpen, setCategoriesOpen] = useState(false);
+  const [categoriesTimeout, setCategoriesTimeout] = useState(null);
   const navigate = useNavigate();
 
   const { cart, removeFromCart, updateQty, totalPrice } = useCart();
+  const { user, logout } = useAuth();
 
   useEffect(() => {
     const handleScroll = () => setScrolled(window.scrollY > 50);
@@ -26,7 +56,7 @@ const Navbar = () => {
     return () => window.removeEventListener("scroll", handleScroll);
   }, []);
 
-  // بررسی وضعیت دارک مود از localStorage
+  // مدیریت دارک مود
   useEffect(() => {
     const isDark = localStorage.getItem("darkMode") === "true";
     setDarkMode(isDark);
@@ -37,12 +67,10 @@ const Navbar = () => {
     }
   }, []);
 
-  // تابع تغییر دارک مود
   const toggleDarkMode = () => {
     const newDarkMode = !darkMode;
     setDarkMode(newDarkMode);
     localStorage.setItem("darkMode", newDarkMode.toString());
-    
     if (newDarkMode) {
       document.documentElement.classList.add("dark");
     } else {
@@ -50,13 +78,42 @@ const Navbar = () => {
     }
   };
 
+  const handleLogout = () => {
+    logout();
+    navigate("/");
+  };
+
+  // توابع جدید برای مدیریت hover با تاخیر
+  const handleMouseEnter = () => {
+    if (categoriesTimeout) {
+      clearTimeout(categoriesTimeout);
+      setCategoriesTimeout(null);
+    }
+    setCategoriesOpen(true);
+  };
+
+  const handleMouseLeave = () => {
+    const timeout = setTimeout(() => {
+      setCategoriesOpen(false);
+    }, 1000); // 1 ثانیه تاخیر
+    
+    setCategoriesTimeout(timeout);
+  };
+
+  // دسته‌بندی‌ها
+  const categories = [
+    { name: "اسکیت برد", link: "/skateboard", icon: "🛹" },
+    { name: "اسکیت اینلاین", link: "/inline-skates", icon: "⛸️" },
+    { name: "تخته موج‌سواری", link: "/surfboard", icon: "🏄" },
+    { name: "کفش چرخ‌دار", link: "/heelys", icon: "👟" },
+    { name: "اسکیت روی یخ", link: "/ice-skates", icon: "❄️" },
+    { name: "لوازم جانبی", link: "/accessories", icon: "🛡️" }
+  ];
+
+  // منوی اصلی
   const menuItems = [
-    { name: "خانه", link: "/" },
-    { name: "مانتو", link: "/manto" },
-    { name: "شلوار", link: "/shalvar" },
-    { name: "صفحه ۴", link: "/page4" },
-    { name: "صفحه ۵", link: "/page5" },
-    { name: "ارتباط با ما", link: "/contact" },
+    { name: "خانه", link: "/", icon: <FiHome className="w-5 h-5" /> },
+    { name: "درباره ما", link: "/about", icon: <FiInfo className="w-5 h-5" /> },
   ];
 
   return (
@@ -69,13 +126,22 @@ const Navbar = () => {
             : "bg-transparent"
         }`}
       >
-        {/* سمت راست دکمه‌ها */}
-        <div className="flex pl-4 space-x-2 sm:space-x-4 items-center">
-          {/* دکمه تغییر تم */}
+        {/* سمت راست - لوگو */}
+        <div className="flex items-center">
+          <Link 
+            to="/" 
+            className="text-2xl font-bold bg-gradient-to-r from-amber-500 to-amber-600 bg-clip-text text-transparent hover:scale-105 transition-transform duration-200"
+          >
+            اسپرت‌لند
+          </Link>
+        </div>
+
+        {/* سمت چپ - منو و دکمه‌ها */}
+        <div className="flex items-center space-x-2 sm:space-x-4">
+          {/* تغییر تم */}
           <button
             onClick={toggleDarkMode}
             className="relative overflow-hidden flex items-center justify-center w-10 h-10 rounded-full bg-amber-500 dark:bg-amber-600 text-white hover:bg-amber-600 dark:hover:bg-amber-700 hover:scale-105 transition-all duration-200 shadow-md hover:shadow-amber-300/40"
-            aria-label="تغییر تم"
           >
             {darkMode ? (
               <FiSun className="w-5 h-5" />
@@ -84,16 +150,89 @@ const Navbar = () => {
             )}
           </button>
 
-          {/* دکمه ثبت نام | ورود */}
-          <button
-            onClick={() => navigate("/register")}
-            className="relative overflow-hidden flex items-center space-x-2 px-4 py-2 rounded-lg border border-amber-500 dark:border-amber-400 bg-white dark:bg-gray-800 text-amber-600 dark:text-amber-400 hover:bg-amber-50 dark:hover:bg-gray-700 transition-all duration-200 shadow-sm hover:shadow-md"
-          >
-            <span className="text-sm font-semibold">ثبت نام | ورود</span>
-            <FiUser className="w-5 h-5" />
-          </button>
+          {/* مدیریت کاربر */}
+          {user ? (
+            <div className="flex items-center gap-3">
+              {/* دکمه خروج */}
+              <button
+                onClick={handleLogout}
+                className="hidden sm:flex items-center gap-2 px-4 py-2 bg-red-500 text-white rounded-lg hover:bg-red-600 transition-all duration-200 shadow-sm hover:shadow-md"
+              >
+                <FiLogOut className="w-4 h-4" />
+                <span className="text-sm font-semibold">خروج</span>
+              </button>
+              
+              {/* نمایش کاربر در موبایل */}
+              <div className="sm:hidden flex items-center gap-2 bg-amber-100 dark:bg-amber-900/30 text-amber-700 dark:text-amber-400 px-3 py-2 rounded-lg">
+                <span className="text-sm font-medium">{user.name}</span>
+              </div>
+            </div>
+          ) : (
+            /* دکمه ثبت نام | ورود */
+            <button
+              onClick={() => navigate("/register")}
+              className="relative overflow-hidden flex items-center space-x-2 px-4 py-2 rounded-lg border border-amber-500 dark:border-amber-400 bg-white dark:bg-gray-800 text-amber-600 dark:text-amber-400 hover:bg-amber-50 dark:hover:bg-gray-700 transition-all duration-200 shadow-sm hover:shadow-md"
+            >
+              <span className="text-sm font-semibold">ثبت نام | ورود</span>
+              <FiUser className="w-5 h-5" />
+            </button>
+          )}
 
-          {/* آیکون سبد خرید */}
+          {/* منوی دسته‌بندی‌ها با تاخیر - فقط در دسکتاپ */}
+          <div className="relative hidden md:block">
+            <button
+              onMouseEnter={handleMouseEnter}
+              onMouseLeave={handleMouseLeave}
+              className="flex items-center gap-2 px-4 py-2 bg-amber-500 dark:bg-amber-600 text-white rounded-lg hover:bg-amber-600 dark:hover:bg-amber-700 transition-all duration-200 shadow-md hover:shadow-amber-300/40"
+            >
+              <FiGrid className="w-5 h-5" />
+              <span className="hidden sm:block font-semibold">محصولات ما</span>
+              <FiChevronDown className={`w-4 h-4 transition-transform duration-200 ${categoriesOpen ? "rotate-180" : ""}`} />
+            </button>
+
+            {/* منوی کشویی دسته‌بندی‌ها */}
+            {categoriesOpen && (
+              <div 
+                className="absolute top-full left-0 mt-2 w-64 bg-white dark:bg-gray-800 rounded-xl shadow-2xl border border-amber-100 dark:border-gray-700 py-2 z-50"
+                onMouseEnter={handleMouseEnter}
+                onMouseLeave={handleMouseLeave}
+              >
+                {categories.map((category, index) => (
+                  <Link
+                    key={category.name}
+                    to={category.link}
+                    className="flex items-center gap-3 px-4 py-3 hover:bg-amber-50 dark:hover:bg-gray-700 transition-all duration-200 group"
+                    onClick={() => setCategoriesOpen(false)}
+                  >
+                    <span className="text-xl">{category.icon}</span>
+                    <span className="text-gray-800 dark:text-white font-medium group-hover:text-amber-600 dark:group-hover:text-amber-400 transition-colors">
+                      {category.name}
+                    </span>
+                  </Link>
+                ))}
+              </div>
+            )}
+          </div>
+
+          {/* منوی اصلی */}
+          <div className="hidden md:flex items-center space-x-4">
+            {menuItems.map((item) => (
+              <Link
+                key={item.name}
+                to={item.link}
+                className={`flex items-center gap-2 px-4 py-2 rounded-lg transition-all duration-200 font-medium
+                  ${scrolled 
+                    ? "text-gray-800 dark:text-white hover:bg-amber-100 dark:hover:bg-gray-700 hover:text-amber-600 dark:hover:text-amber-400" 
+                    : "text-white dark:text-gray-300 hover:bg-white/20 dark:hover:bg-gray-700/50"
+                  }`}
+              >
+                {item.icon}
+                <span>{item.name}</span>
+              </Link>
+            ))}
+          </div>
+
+          {/* سبد خرید */}
           <button
             onClick={() => setCartOpen(true)}
             className="relative flex items-center justify-center w-10 h-10 rounded-full bg-amber-500 dark:bg-amber-600 text-white hover:bg-amber-600 dark:hover:bg-amber-700 hover:scale-105 transition-all duration-200 shadow-md hover:shadow-amber-300/40"
@@ -105,35 +244,20 @@ const Navbar = () => {
               </span>
             )}
           </button>
-        </div>
 
-        {/* منوی دسکتاپ */}
-        <ul
-          className={`hidden md:flex space-x-8 pr-9 transition-colors duration-300 
-          ${scrolled 
-            ? "text-gray-800 dark:text-white" 
-            : "text-white dark:text-gray-300"
-          }`}
-        >
-          {menuItems.map((item) => (
-            <li key={item.name} className="hover:text-amber-500 dark:hover:text-amber-400 transition-colors duration-200 font-medium">
-              <Link to={item.link}>{item.name}</Link>
-            </li>
-          ))}
-        </ul>
-
-        {/* دکمه موبایل */}
-        <div className="md:hidden">
-          <button
-            onClick={() => setIsOpen(true)}
-            className={`text-2xl font-bold transition-colors duration-300
-            ${scrolled 
-              ? "text-gray-800 dark:text-white" 
-              : "text-white dark:text-gray-300"
-            } hover:text-amber-500 dark:hover:text-amber-400`}
-          >
-            ☰
-          </button>
+          {/* دکمه موبایل */}
+          <div className="md:hidden">
+            <button
+              onClick={() => setIsOpen(true)}
+              className={`text-2xl font-bold transition-colors duration-300
+              ${scrolled 
+                ? "text-gray-800 dark:text-white" 
+                : "text-white dark:text-gray-300"
+              } hover:text-amber-500 dark:hover:text-amber-400`}
+            >
+              ☰
+            </button>
+          </div>
         </div>
       </nav>
 
@@ -142,35 +266,87 @@ const Navbar = () => {
         className={`fixed top-0 right-0 h-full w-64 bg-gradient-to-b from-white to-amber-50 dark:from-gray-900 dark:to-gray-800 text-gray-800 dark:text-white shadow-2xl transform transition-all duration-500 ease-in-out z-50 border-l border-amber-100 dark:border-gray-700
         ${isOpen ? "translate-x-0 opacity-100" : "translate-x-full opacity-0"}`}
       >
-        <ul className="flex flex-col divide-y divide-amber-200 dark:divide-gray-600 mt-2 pr-2">
-          {menuItems.map((item) => (
-            <li key={item.name}>
-              <Link
-                to={item.link}
+        <div className="flex flex-col h-full">
+          {/* هدر منو */}
+          <div className="p-4 border-b border-amber-200 dark:border-gray-600">
+            <div className="flex justify-between items-center">
+              <h3 className="font-bold text-amber-600 dark:text-amber-400">منو</h3>
+              <button
                 onClick={() => setIsOpen(false)}
-                className="flex justify-between items-center py-3 px-4 hover:text-amber-600 dark:hover:text-amber-400 hover:bg-amber-100/50 dark:hover:bg-gray-700 transition-all duration-200"
+                className="text-amber-500 dark:text-amber-400 hover:text-amber-600 dark:hover:text-amber-300"
               >
-                <FiChevronLeft className="text-amber-500 dark:text-amber-400 w-5 h-5" />
-                <span className="text-right font-medium">{item.name}</span>
-              </Link>
-            </li>
-          ))}
-          <li>
-            <button
-              onClick={() => {
-                setIsOpen(false);
-                navigate("/register");
-              }}
-              className="flex justify-between items-center py-3 px-4 w-full text-right hover:text-amber-600 dark:hover:text-amber-400 hover:bg-amber-100/50 dark:hover:bg-gray-700 transition-all duration-200"
-            >
-              <FiUser className="text-amber-500 dark:text-amber-400 w-5 h-5" />
-              <span className="font-medium">ثبت نام | ورود</span>
-            </button>
-          </li>
-        </ul>
+                <FiX className="w-6 h-6" />
+              </button>
+            </div>
+          </div>
+
+          {/* محتوای منو */}
+          <div className="flex-1 overflow-y-auto py-4">
+            {/* وضعیت کاربر */}
+            {user && (
+              <div className="bg-amber-100 dark:bg-amber-900/30 mx-4 mb-4 rounded-lg p-3">
+                <div className="flex items-center gap-2 text-amber-700 dark:text-amber-400">
+                  <div className="flex flex-col">
+                    <span className="font-bold text-sm">{user.name}</span>
+                    <span className="text-xs">{user.email}</span>
+                  </div>
+                </div>
+              </div>
+            )}
+
+            {/* منوی اصلی */}
+            <div className="space-y-2 px-4">
+              {menuItems.map((item) => (
+                <Link
+                  key={item.name}
+                  to={item.link}
+                  onClick={() => setIsOpen(false)}
+                  className="flex items-center gap-3 px-4 py-3 rounded-lg hover:bg-amber-100 dark:hover:bg-gray-700 transition-all duration-200 text-right"
+                >
+                  {item.icon}
+                  <span className="font-medium">{item.name}</span>
+                </Link>
+              ))}
+            </div>
+
+            {/* دسته‌بندی‌ها در موبایل */}
+            <div className="mt-6 px-4">
+              <h4 className="text-sm font-bold text-amber-600 dark:text-amber-400 mb-3 px-4">محصولات ما</h4>
+              <div className="space-y-2">
+                {categories.map((category) => (
+                  <Link
+                    key={category.name}
+                    to={category.link}
+                    onClick={() => setIsOpen(false)}
+                    className="flex items-center gap-3 px-4 py-3 rounded-lg hover:bg-amber-100 dark:hover:bg-gray-700 transition-all duration-200 text-right"
+                  >
+                    <span className="text-xl">{category.icon}</span>
+                    <span className="font-medium">{category.name}</span>
+                  </Link>
+                ))}
+              </div>
+            </div>
+
+            {/* دکمه خروج در موبایل */}
+            {user && (
+              <div className="mt-6 px-4">
+                <button
+                  onClick={() => {
+                    setIsOpen(false);
+                    handleLogout();
+                  }}
+                  className="flex items-center gap-3 px-4 py-3 w-full text-right hover:bg-red-50 dark:hover:bg-red-900/20 hover:text-red-600 dark:hover:text-red-400 transition-all duration-200 rounded-lg"
+                >
+                  <FiLogOut className="text-red-500 dark:text-red-400 w-5 h-5" />
+                  <span className="font-medium">خروج از حساب</span>
+                </button>
+              </div>
+            )}
+          </div>
+        </div>
       </div>
 
-      {/* پس‌زمینه نیمه شفاف برای منوی موبایل */}
+      {/* پس‌زمینه منوی موبایل */}
       {isOpen && (
         <div
           onClick={() => setIsOpen(false)}
@@ -178,11 +354,12 @@ const Navbar = () => {
         ></div>
       )}
 
-      {/* پنجره سبد خرید از پایین */}
+      {/* پنجره سبد خرید */}
       <div
         className={`fixed bottom-0 left-0 w-full bg-white dark:bg-gray-900 text-gray-800 dark:text-white shadow-2xl transform transition-transform duration-500 z-50 border-t-4 border-amber-500 dark:border-amber-400
         ${cartOpen ? "translate-y-0" : "translate-y-full"}`}
       >
+        {/* محتوای سبد خرید */}
         <div className="p-4 flex justify-between items-center border-b border-amber-100 dark:border-gray-700 bg-amber-50 dark:bg-gray-800">
           <h3 className="text-lg font-bold text-amber-700 dark:text-amber-400">🛒 سبد خرید</h3>
           <button 

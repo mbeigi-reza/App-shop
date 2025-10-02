@@ -32,6 +32,18 @@ const Carousel = () => {
       {/* Overlay سفید-طلایی */}
       <div className="absolute inset-0 bg-gradient-to-t from-white/30 dark:from-gray-900/40 to-transparent z-10"></div>
 
+      {/* متن وسط هدر */}
+      <div className="absolute top-1/2 left-1/2 transform -translate-x-1/2 -translate-y-1/2 text-center z-20 w-full px-4">
+        <h1 className="text-5xl md:text-7xl lg:text-8xl font-bold text-gray-800 dark:text-white mb-4 drop-shadow-lg leading-tight">
+          <span className="bg-gradient-to-l from-amber-500 to-amber-700 dark:from-amber-400 dark:to-amber-600 bg-clip-text text-transparent">
+            استایل نو
+          </span>
+        </h1>
+        <p className="text-xl md:text-2xl text-gray-600 dark:text-gray-400 drop-shadow-md">
+          بهترین انتخاب برای سبک زندگی شما
+        </p>
+      </div>
+
       {/* دایره‌های پایین */}
       <div className="absolute bottom-4 md:bottom-8 left-1/2 transform -translate-x-1/2 flex space-x-3 z-20">
         {images.map((_, index) => (
@@ -46,16 +58,6 @@ const Carousel = () => {
               }`}
           ></button>
         ))}
-      </div>
-
-      {/* متن روی کاروسل */}
-      <div className="absolute bottom-20 left-1/2 transform -translate-x-1/2 text-center z-20">
-        <h1 className="text-3xl md:text-5xl font-bold text-gray-800 dark:text-white mb-4 drop-shadow-lg">
-          فروشگاه اینترنتی ما
-        </h1>
-        <p className="text-lg md:text-xl text-gray-700 dark:text-gray-300 drop-shadow-md">
-          بهترین محصولات با کیفیت عالی
-        </p>
       </div>
     </div>
   );

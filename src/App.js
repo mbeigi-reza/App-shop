@@ -17,6 +17,8 @@ import Heelys from "./pages/Heelys";
 import IceSkates from "./pages/IceSkates";
 import Accessories from "./pages/Accessories";
 
+import About from "./pages/About";
+
 function App() {
   return (
     <Router>
@@ -122,6 +124,18 @@ function App() {
             <>
               <Header />
               <Accessories />
+              <Footer />
+            </>
+          }
+        />
+
+        {/* صفحه درباره ما */}
+        <Route
+          path="/about"
+          element={
+            <>
+              <Header />
+              <About />
               <Footer />
             </>
           }
