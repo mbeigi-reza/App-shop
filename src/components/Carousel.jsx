@@ -18,7 +18,7 @@ const Carousel = () => {
   const goToSlide = (index) => setCurrentIndex(index);
 
   return (
-    <div className="w-full h-[100vh] md:h-screen relative overflow-hidden bg-white dark:bg-gray-900">
+    <div className="w-full h-[70vh] md:h-screen relative overflow-hidden bg-white dark:bg-gray-900">
       {images.map((img, index) => (
         <img
           key={index}
@@ -39,13 +39,13 @@ const Carousel = () => {
            اسپرت لند
           </span>
         </h1>
-        <p className="text-xl md:text-2xl text-gray-600 dark:text-gray-400 drop-shadow-md">
+        <p className="text-xl md:text-2xl text-black dark:text-gray-400 drop-shadow-md">
           بهترین انتخاب برای سبک زندگی شما
         </p>
       </div>
 
-      {/* دایره‌های پایین */}
-      <div className="absolute bottom-4 md:bottom-8 left-1/2 transform -translate-x-1/2 flex space-x-3 z-20">
+      {/* دایره‌های پایین - تصحیح شده */}
+      <div className="absolute bottom-4 md:bottom-8 left-1/2 transform -translate-x-1/2 flex gap-4 z-20">
         {images.map((_, index) => (
           <button
             key={index}

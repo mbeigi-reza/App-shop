@@ -10,24 +10,21 @@ import {
   FiHome,
   FiInfo,
   FiChevronDown,
-  FiGrid
+  FiGrid,
+  FiShield
 } from "react-icons/fi";
 import { useCart } from "../context/CartContext";
 
-// هوک مدیریت کاربر
+// هوک مدیریت کاربر - ساده‌سازی شده
 const useAuth = () => {
   const [user, setUser] = useState(null);
 
   useEffect(() => {
-    const currentUser = {
-      id: 3,
-      username: "admin",
-      name: "مدیر سایت",
-      email: "admin@shop.com",
-      role: "admin",
-      avatar: ""
-    };
-    setUser(currentUser);
+    // فقط از localStorage کاربر رو بگیر
+    const savedUser = localStorage.getItem('currentUser');
+    if (savedUser) {
+      setUser(JSON.parse(savedUser));
+    }
   }, []);
 
   const logout = () => {
@@ -35,7 +32,17 @@ const useAuth = () => {
     localStorage.removeItem('currentUser');
   };
 
-  return { user, logout };
+  const login = (userData) => {
+    setUser(userData);
+    localStorage.setItem('currentUser', JSON.stringify(userData));
+  };
+
+  return { 
+    user, 
+    logout, 
+    login,
+    isAdmin: user?.role === 'admin'
+  };
 };
 
 const Navbar = () => {
@@ -48,7 +55,7 @@ const Navbar = () => {
   const navigate = useNavigate();
 
   const { cart, removeFromCart, updateQty, totalPrice } = useCart();
-  const { user, logout } = useAuth();
+  const { user, logout, isAdmin } = useAuth();
 
   useEffect(() => {
     const handleScroll = () => setScrolled(window.scrollY > 50);
@@ -82,6 +89,10 @@ const Navbar = () => {
     logout();
     navigate("/");
   };
+
+    const handleLogin = () => {
+     navigate("/login"); // به جای "/register"
+     };
 
   // توابع جدید برای مدیریت hover با تاخیر
   const handleMouseEnter = () => {
@@ -132,7 +143,7 @@ const Navbar = () => {
             to="/" 
             className="text-2xl font-bold bg-gradient-to-r from-amber-500 to-amber-600 bg-clip-text text-transparent hover:scale-105 transition-transform duration-200"
           >
-            اسپرت‌لند
+            SportLand
           </Link>
         </div>
 
@@ -153,6 +164,17 @@ const Navbar = () => {
           {/* مدیریت کاربر */}
           {user ? (
             <div className="flex items-center gap-3">
+              {/* پنل ادمین - فقط برای ادمین‌ها */}
+              {isAdmin && (
+                <Link
+                  to="/admin"
+                  className="hidden sm:flex items-center gap-2 px-4 py-2 bg-green-500 text-white rounded-lg hover:bg-green-600 transition-all duration-200 shadow-sm hover:shadow-md"
+                >
+                  <FiShield className="w-4 h-4" />
+                  <span className="text-sm font-semibold">پنل ادمین</span>
+                </Link>
+              )}
+              
               {/* دکمه خروج */}
               <button
                 onClick={handleLogout}
@@ -163,17 +185,20 @@ const Navbar = () => {
               </button>
               
               {/* نمایش کاربر در موبایل */}
-              <div className="sm:hidden flex items-center gap-2 bg-amber-100 dark:bg-amber-900/30 text-amber-700 dark:text-amber-400 px-3 py-2 rounded-lg">
+              <div className="flex items-center gap-2 bg-amber-100 dark:bg-amber-900/30 text-amber-700 dark:text-amber-400 px-3 py-2 rounded-lg">
                 <span className="text-sm font-medium">{user.name}</span>
+                {isAdmin && (
+                  <span className="text-xs bg-green-500 text-white px-2 py-1 rounded">مدیر</span>
+                )}
               </div>
             </div>
           ) : (
-            /* دکمه ثبت نام | ورود */
+            /* دکمه ورود */
             <button
-              onClick={() => navigate("/register")}
+              onClick={handleLogin}
               className="relative overflow-hidden flex items-center space-x-2 px-4 py-2 rounded-lg border border-amber-500 dark:border-amber-400 bg-white dark:bg-gray-800 text-amber-600 dark:text-amber-400 hover:bg-amber-50 dark:hover:bg-gray-700 transition-all duration-200 shadow-sm hover:shadow-md"
             >
-              <span className="text-sm font-semibold">ثبت نام | ورود</span>
+              <span className="text-sm font-semibold">ورود</span>
               <FiUser className="w-5 h-5" />
             </button>
           )}
@@ -289,6 +314,9 @@ const Navbar = () => {
                   <div className="flex flex-col">
                     <span className="font-bold text-sm">{user.name}</span>
                     <span className="text-xs">{user.email}</span>
+                    {isAdmin && (
+                      <span className="text-xs bg-green-500 text-white px-2 py-1 rounded mt-1 text-center">مدیر سایت</span>
+                    )}
                   </div>
                 </div>
               </div>
@@ -327,6 +355,20 @@ const Navbar = () => {
               </div>
             </div>
 
+            {/* پنل ادمین در موبایل */}
+            {isAdmin && (
+              <div className="mt-4 px-4">
+                <Link
+                  to="/admin"
+                  onClick={() => setIsOpen(false)}
+                  className="flex items-center gap-3 px-4 py-3 rounded-lg hover:bg-green-50 dark:hover:bg-green-900/20 hover:text-green-600 dark:hover:text-green-400 transition-all duration-200 text-right"
+                >
+                  <FiShield className="text-green-500 dark:text-green-400 w-5 h-5" />
+                  <span className="font-medium">پنل ادمین</span>
+                </Link>
+              </div>
+            )}
+
             {/* دکمه خروج در موبایل */}
             {user && (
               <div className="mt-6 px-4">
@@ -339,6 +381,22 @@ const Navbar = () => {
                 >
                   <FiLogOut className="text-red-500 dark:text-red-400 w-5 h-5" />
                   <span className="font-medium">خروج از حساب</span>
+                </button>
+              </div>
+            )}
+
+            {/* دکمه ورود در موبایل */}
+            {!user && (
+              <div className="mt-6 px-4">
+                <button
+                  onClick={() => {
+                    setIsOpen(false);
+                    handleLogin();
+                  }}
+                  className="flex items-center gap-3 px-4 py-3 w-full text-right hover:bg-amber-50 dark:hover:bg-amber-900/20 hover:text-amber-600 dark:hover:text-amber-400 transition-all duration-200 rounded-lg"
+                >
+                  <FiUser className="text-amber-500 dark:text-amber-400 w-5 h-5" />
+                  <span className="font-medium">ورود به حساب</span>
                 </button>
               </div>
             )}

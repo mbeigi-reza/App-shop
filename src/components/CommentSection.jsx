@@ -1,107 +1,70 @@
 // src/components/CommentSection.jsx
-import React, { useState, useEffect} from "react";
+import React, { useState, useEffect } from "react";
 import { FiStar, FiSend, FiEdit3, FiTrash2, FiHeart, FiUser, FiShield } from "react-icons/fi";
-
-// ایجاد Context برای مدیریت کاربر
-const AuthContext = React.createContext();
-
-// هوک ساده برای مدیریت کاربر
-const useAuth = () => {
-  const [user, setUser] = useState(null);
-
-  useEffect(() => {
-    // در حالت واقعی اینجا از localStorage یا API کاربر رو می‌گیری
-    const currentUser = {
-      id: 3, // ادمین
-      username: "admin",
-      name: "مدیر سایت",
-      role: "admin"
-    };
-    setUser(currentUser);
-  }, []);
-
-  return { user };
-};
 
 const CommentSection = ({ productId }) => {
   const [comments, setComments] = useState([]);
-  const [loading, setLoading] = useState(true);
+  const [loading, setLoading] = useState(false);
   const [newComment, setNewComment] = useState("");
   const [rating, setRating] = useState(0);
   const [hoverRating, setHoverRating] = useState(0);
   const [submitting, setSubmitting] = useState(false);
-  const { user } = useAuth();
 
-  // API Base URL - اگر JSON Server اجرا نیست از localStorage استفاده می‌کنه
-  const API_BASE = "http://localhost:3001";
+  // کاربر ثابت - می‌تونی بعداً به localStorage وصلش کنی
+  const user = {
+    id: 1,
+    username: "کاربر مهمان",
+    name: "کاربر مهمان",
+    role: "user"
+  };
 
-  // بررسی اینکه کاربر ادمین هست یا نه
   const isAdmin = user?.role === 'admin';
 
-  // دریافت کامنت‌ها از JSON Server یا localStorage
+  // دریافت کامنت‌ها از localStorage
   useEffect(() => {
-    const fetchComments = async () => {
-      try {
-        // اول سعی کن از JSON Server بگیر
-        const response = await fetch(`${API_BASE}/comments?productId=${productId}`);
-        if (response.ok) {
-          const data = await response.json();
-          setComments(data);
-          // ذخیره در localStorage برای پشتیبان
-          localStorage.setItem(`comments_${productId}`, JSON.stringify(data));
-        } else {
-          throw new Error('سرور در دسترس نیست');
+    const savedComments = localStorage.getItem(`comments_${productId}`);
+    if (savedComments) {
+      setComments(JSON.parse(savedComments));
+    } else {
+      // داده‌های اولیه
+      setComments([
+        {
+          id: 1,
+          productId: parseInt(productId),
+          userId: 1,
+          user: "علی محمدی",
+          rating: 5,
+          text: "محصول فوق‌العاده‌ای هست! کیفیت ساخت عالی و حمل و نقل سریع",
+          date: "۱۴۰۲/۱۰/۱۵",
+          likes: 12,
+          isLiked: false
+        },
+        {
+          id: 2,
+          productId: parseInt(productId),
+          userId: 2,
+          user: "سارا احمدی",
+          rating: 4,
+          text: "راضی هستم اما رنگ محصول کمی با عکس تفاوت داشت",
+          date: "۱۴۰۲/۱۰/۱۰",
+          likes: 8,
+          isLiked: true
         }
-      } catch (error) {
-        console.log('استفاده از localStorage به دلیل:', error.message);
-        // اگر سرور در دسترس نبود، از localStorage استفاده کن
-        const savedComments = localStorage.getItem(`comments_${productId}`);
-        if (savedComments) {
-          setComments(JSON.parse(savedComments));
-        } else {
-          // داده‌های اولیه
-          setComments([
-            {
-              id: 1,
-              productId: parseInt(productId),
-              userId: 1,
-              user: "علی محمدی",
-              rating: 5,
-              text: "محصول فوق‌العاده‌ای هست! کیفیت ساخت عالی و حمل و نقل سریع",
-              date: "۱۴۰۲/۱۰/۱۵",
-              likes: 12,
-              isLiked: false
-            },
-            {
-              id: 2,
-              productId: parseInt(productId),
-              userId: 2,
-              user: "سارا احمدی",
-              rating: 4,
-              text: "راضی هستم اما رنگ محصول کمی با عکس تفاوت داشت",
-              date: "۱۴۰۲/۱۰/۱۰",
-              likes: 8,
-              isLiked: true
-            }
-          ]);
-        }
-      } finally {
-        setLoading(false);
-      }
-    };
-
-    fetchComments();
+      ]);
+    }
+    setLoading(false);
   }, [productId]);
 
   // ارسال کامنت جدید
-  const handleAddComment = async () => {
+  const handleAddComment = () => {
     if (!newComment.trim() || rating === 0) return;
 
     setSubmitting(true);
 
     const commentData = {
+      id: Date.now(), // استفاده از timestamp برای id
       productId: parseInt(productId),
-      userId: user?.id || 0, // اگر کاربر لاگین نکرده، 0
+      userId: user?.id || 0,
       user: user?.name || "کاربر مهمان",
       rating: rating,
       text: newComment.trim(),
@@ -110,54 +73,17 @@ const CommentSection = ({ productId }) => {
       isLiked: false
     };
 
-    try {
-      // سعی کن به JSON Server ارسال کنی
-      const response = await fetch(`${API_BASE}/comments`, {
-        method: 'POST',
-        headers: {
-          'Content-Type': 'application/json',
-        },
-        body: JSON.stringify(commentData),
-      });
-
-      let savedComment;
-      
-      if (response.ok) {
-        savedComment = await response.json();
-      } else {
-        // اگر سرور جواب نداد، locally بساز
-        savedComment = {
-          ...commentData,
-          id: Date.now()
-        };
-      }
-
-      const updatedComments = [savedComment, ...comments];
-      setComments(updatedComments);
-      localStorage.setItem(`comments_${productId}`, JSON.stringify(updatedComments));
-      
-      setNewComment("");
-      setRating(0);
-      
-    } catch (error) {
-      console.error('خطا در ارسال نظر:', error);
-      // حالت آفلاین
-      const localComment = {
-        ...commentData,
-        id: Date.now()
-      };
-      const updatedComments = [localComment, ...comments];
-      setComments(updatedComments);
-      localStorage.setItem(`comments_${productId}`, JSON.stringify(updatedComments));
-      setNewComment("");
-      setRating(0);
-    } finally {
-      setSubmitting(false);
-    }
+    const updatedComments = [commentData, ...comments];
+    setComments(updatedComments);
+    localStorage.setItem(`comments_${productId}`, JSON.stringify(updatedComments));
+    
+    setNewComment("");
+    setRating(0);
+    setSubmitting(false);
   };
 
   // لایک کردن کامنت
-  const handleLike = async (commentId) => {
+  const handleLike = (commentId) => {
     const updatedComments = comments.map(comment => 
       comment.id === commentId 
         ? { 
@@ -170,27 +96,10 @@ const CommentSection = ({ productId }) => {
     
     setComments(updatedComments);
     localStorage.setItem(`comments_${productId}`, JSON.stringify(updatedComments));
-
-    // آپدیت در سرور اگر در دسترس باشد
-    try {
-      const commentToUpdate = updatedComments.find(c => c.id === commentId);
-      await fetch(`${API_BASE}/comments/${commentId}`, {
-        method: 'PATCH',
-        headers: {
-          'Content-Type': 'application/json',
-        },
-        body: JSON.stringify({ 
-          likes: commentToUpdate.likes,
-          isLiked: commentToUpdate.isLiked 
-        }),
-      });
-    } catch (error) {
-      console.log('آپدیت لایک در حالت آفلاین انجام شد');
-    }
   };
 
   // حذف کامنت - فقط برای ادمین
-  const handleDeleteComment = async (commentId) => {
+  const handleDeleteComment = (commentId) => {
     if (!isAdmin) {
       alert('فقط مدیر سایت می‌تواند نظرات را حذف کند');
       return;
@@ -201,15 +110,6 @@ const CommentSection = ({ productId }) => {
     const updatedComments = comments.filter(comment => comment.id !== commentId);
     setComments(updatedComments);
     localStorage.setItem(`comments_${productId}`, JSON.stringify(updatedComments));
-
-    // حذف از سرور اگر در دسترس باشد
-    try {
-      await fetch(`${API_BASE}/comments/${commentId}`, {
-        method: 'DELETE',
-      });
-    } catch (error) {
-      console.log('حذف نظر در حالت آفلاین انجام شد');
-    }
   };
 
   // محاسبه میانگین امتیاز
@@ -459,8 +359,8 @@ const CommentSection = ({ productId }) => {
           </span>
           <div className="flex items-center gap-3">
             <span className="flex items-center gap-1">
-              <div className={`w-2 h-2 rounded-full ${navigator.onLine ? 'bg-green-500' : 'bg-yellow-500'}`}></div>
-              {navigator.onLine ? 'آنلاین' : 'آفلاین'}
+              <div className="w-2 h-2 rounded-full bg-green-500"></div>
+              آنلاین
             </span>
             {isAdmin && (
               <span className="text-green-600 dark:text-green-400">
