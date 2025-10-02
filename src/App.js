@@ -1,10 +1,12 @@
-// src/App.jsx
 import { Routes, Route } from "react-router-dom";
+import { AuthProvider } from "./context/AuthContext";
+import { CartProvider } from "./context/CartContext";
 import Home from "./pages/Home";
 import Header from "./components/Header";
 import Footer from "./components/Footer";
-import Register from "./pages/AuthForm";
-import AuthForm from "./pages/AuthForm"; // این خط رو اضافه کن
+import Login from "./pages/Login";
+import Register from "./pages/Register";
+import ForgotPassword from "./pages/ForgotPassword";
 import ProductsPage from "./pages/ProductsPage";
 import ProductDetail from "./pages/ProductDetail";
 import FeaturedProducts from "./pages/FeaturedProducts";
@@ -19,144 +21,144 @@ import About from "./pages/About";
 
 function App() {
   return (
-    <>
-      <Routes>
-        {/* صفحات معمولی با Header و Footer */}
-        <Route
-          path="/"
-          element={
-            <>
-              <Header />
-              <Home />
-              <Footer />
-            </>
-          }
-        />
-        <Route
-          path="/products"
-          element={
-            <>
-              <Header />
-              <ProductsPage />
-              <Footer />
-            </>
-          }
-        />
-        
-        {/* صفحات جدید محصولات ویژه و پیشنهادی */}
-        <Route
-          path="/featured-products"
-          element={
-            <>
-              <Header />
-              <FeaturedProducts />
-              <Footer />
-            </>
-          }
-        />
-        <Route
-          path="/recommended-products"
-          element={
-            <>
-              <Header />
-              <RecommendedProducts />
-              <Footer />
-            </>
-          }
-        />
+    <AuthProvider>
+      <CartProvider>
+        <div className="min-h-screen bg-amber-50 dark:bg-gray-900 transition-colors duration-300">
+          <Routes>
+            {/* صفحاتی که Header می‌خواهند */}
+            <Route
+              path="/"
+              element={
+                <>
+                  <Header />
+                  <Home />
+                  <Footer />
+                </>
+              }
+            />
+            <Route
+              path="/products"
+              element={
+                <>
+                  <Header />
+                  <ProductsPage />
+                  <Footer />
+                </>
+              }
+            />
+            
+            <Route
+              path="/featured-products"
+              element={
+                <>
+                  <Header />
+                  <FeaturedProducts />
+                  <Footer />
+                </>
+              }
+            />
+            <Route
+              path="/recommended-products"
+              element={
+                <>
+                  <Header />
+                  <RecommendedProducts />
+                  <Footer />
+                </>
+              }
+            />
 
-        {/* صفحات جدید اسکیت */}
-        <Route
-          path="/skateboard"
-          element={
-            <>
-              <Header />
-              <Skateboard />
-              <Footer />
-            </>
-          }
-        />
-        <Route
-          path="/inline-skates"
-          element={
-            <>
-              <Header />
-              <InlineSkates />
-              <Footer />
-            </>
-          }
-        />
-        <Route
-          path="/surfboard"
-          element={
-            <>
-              <Header />
-              <Surfboard />
-              <Footer />
-            </>
-          }
-        />
-        <Route
-          path="/heelys"
-          element={
-            <>
-              <Header />
-              <Heelys />
-              <Footer />
-            </>
-          }
-        />
-        <Route
-          path="/ice-skates"
-          element={
-            <>
-              <Header />
-              <IceSkates />
-              <Footer />
-            </>
-          }
-        />
-        <Route
-          path="/accessories"
-          element={
-            <>
-              <Header />
-              <Accessories />
-              <Footer />
-            </>
-          }
-        />
+            <Route
+              path="/skateboard"
+              element={
+                <>
+                  <Header />
+                  <Skateboard />
+                  <Footer />
+                </>
+              }
+            />
+            <Route
+              path="/inline-skates"
+              element={
+                <>
+                  <Header />
+                  <InlineSkates />
+                  <Footer />
+                </>
+              }
+            />
+            <Route
+              path="/surfboard"
+              element={
+                <>
+                  <Header />
+                  <Surfboard />
+                  <Footer />
+                </>
+              }
+            />
+            <Route
+              path="/heelys"
+              element={
+                <>
+                  <Header />
+                  <Heelys />
+                  <Footer />
+                </>
+              }
+            />
+            <Route
+              path="/ice-skates"
+              element={
+                <>
+                  <Header />
+                  <IceSkates />
+                  <Footer />
+                </>
+              }
+            />
+            <Route
+              path="/accessories"
+              element={
+                <>
+                  <Header />
+                  <Accessories />
+                  <Footer />
+                </>
+              }
+            />
 
-        {/* صفحه درباره ما */}
-        <Route
-          path="/about"
-          element={
-            <>
-              <Header />
-              <About />
-              <Footer />
-            </>
-          }
-        />
+            <Route
+              path="/about"
+              element={
+                <>
+                  <Header />
+                  <About />
+                  <Footer />
+                </>
+              }
+            />
 
-        {/* صفحه ثبت نام ساده */}
-        <Route path="/register" element={<Register />} />
+            {/* صفحات احراز هویت - بدون Header و Footer */}
+            <Route path="/login" element={<Login />} />
+            <Route path="/register" element={<Register />} />
+            <Route path="/forgot-password" element={<ForgotPassword />} />
 
-        {/* صفحه لاگین/ثبت‌نام پیشرفته */}
-        <Route path="/login" element={<AuthForm />} />
-
-        {/* صفحه جزئیات محصول با Footer ولی بدون Header */}
-        <Route
-          path="/product/:id"
-          element={
-            <>
-              <ProductDetail />
-              <Footer />
-            </>
-          }
-        />
-      </Routes>
-    </>
+            {/* صفحه محصول - فقط Footer */}
+            <Route
+              path="/product/:id"
+              element={
+                <>
+                  <ProductDetail />
+                  <Footer />
+                </>
+              }
+            />
+          </Routes>
+        </div>
+      </CartProvider>
+    </AuthProvider>
   );
 }
 

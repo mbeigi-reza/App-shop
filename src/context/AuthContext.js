@@ -1,4 +1,3 @@
-// src/context/AuthContext.js
 import { createContext, useState, useContext, useEffect } from 'react';
 
 const AuthContext = createContext();
@@ -7,7 +6,6 @@ export const AuthProvider = ({ children }) => {
   const [user, setUser] = useState(null);
   const [loading, setLoading] = useState(true);
 
-  // بررسی کاربر لاگین کرده از localStorage
   useEffect(() => {
     const savedUser = localStorage.getItem('currentUser');
     if (savedUser) {
@@ -16,10 +14,8 @@ export const AuthProvider = ({ children }) => {
     setLoading(false);
   }, []);
 
-  // ثبت نام
   const register = async (userData) => {
     try {
-      // بررسی وجود کاربر
       const checkResponse = await fetch('http://localhost:3001/users');
       const users = await checkResponse.json();
       
@@ -31,7 +27,6 @@ export const AuthProvider = ({ children }) => {
         throw new Error('نام کاربری یا ایمیل قبلاً استفاده شده است');
       }
 
-      // ثبت کاربر جدید
       const response = await fetch('http://localhost:3001/users', {
         method: 'POST',
         headers: {
@@ -55,7 +50,6 @@ export const AuthProvider = ({ children }) => {
     }
   };
 
-  // ورود
   const login = async (username, password) => {
     try {
       const response = await fetch('http://localhost:3001/users');
@@ -77,14 +71,24 @@ export const AuthProvider = ({ children }) => {
     }
   };
 
-  // خروج
   const logout = () => {
     setUser(null);
     localStorage.removeItem('currentUser');
   };
 
+  const isAuthenticated = !!user;
+  const isAdmin = user?.role === 'admin';
+
   return (
-    <AuthContext.Provider value={{ user, register, login, logout, loading }}>
+    <AuthContext.Provider value={{ 
+      user, 
+      register, 
+      login, 
+      logout, 
+      loading,
+      isAuthenticated,
+      isAdmin
+    }}>
       {children}
     </AuthContext.Provider>
   );

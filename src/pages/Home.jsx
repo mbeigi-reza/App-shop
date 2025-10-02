@@ -1,4 +1,4 @@
-import React, { useState, useEffect, useRef } from "react";
+import React, { useState, useEffect } from "react";
 import { Link } from "react-router-dom";
 import Categories from "../components/Categories";
 import ProductCard from "../components/ProductCard";
@@ -8,54 +8,38 @@ const Home = () => {
   const [displayedProducts, setDisplayedProducts] = useState([]);
   const [usedProductIds, setUsedProductIds] = useState(new Set());
 
-  // گرفتن محصولات رندوم بدون تکرار
-  const getNewRandomProducts = (count, excludeIds = []) => {
+  // 6 محصول ثابت اول
+  const initialProducts = allProducts.slice(0, 6);
+
+  // گرفتن 12 محصول جدید بدون تکرار
+  const getNewProducts = (count) => {
     const availableProducts = allProducts.filter(
-      (p) => !excludeIds.includes(p.id)
+      (p) => !usedProductIds.has(p.id)
     );
-    const shuffled = [...availableProducts].sort(() => 0.5 - Math.random());
-    return shuffled.slice(0, count);
+    return availableProducts.slice(0, count);
   };
 
-  // بارگذاری اولیه → فقط یکبار
+  // بارگذاری اولیه
   useEffect(() => {
-    const storedProducts = localStorage.getItem("displayedProducts");
-    const storedUsedIds = localStorage.getItem("usedProductIds");
-
-    if (storedProducts && storedUsedIds) {
-      setDisplayedProducts(JSON.parse(storedProducts));
-      setUsedProductIds(new Set(JSON.parse(storedUsedIds)));
-    } else {
-      const initialProducts = getNewRandomProducts(9);
-      setDisplayedProducts(initialProducts);
-      setUsedProductIds(new Set(initialProducts.map((p) => p.id)));
-
-      localStorage.setItem("displayedProducts", JSON.stringify(initialProducts));
-      localStorage.setItem(
-        "usedProductIds",
-        JSON.stringify(initialProducts.map((p) => p.id))
-      );
-    }
+    setDisplayedProducts(initialProducts);
+    setUsedProductIds(new Set(initialProducts.map((p) => p.id)));
   }, []);
 
   // دکمه "مشاهده ادامه"
   const handleLoadMore = () => {
-    const currentIds = [...usedProductIds];
-    const newProducts = getNewRandomProducts(8, currentIds);
-
+    const newProducts = getNewProducts(12);
+    
     if (newProducts.length > 0) {
       const updatedProducts = [...displayedProducts, ...newProducts];
-      const updatedIds = [...currentIds, ...newProducts.map((p) => p.id)];
+      const updatedIds = [...usedProductIds, ...newProducts.map((p) => p.id)];
 
       setDisplayedProducts(updatedProducts);
       setUsedProductIds(new Set(updatedIds));
-
-      localStorage.setItem("displayedProducts", JSON.stringify(updatedProducts));
-      localStorage.setItem("usedProductIds", JSON.stringify(updatedIds));
     }
   };
 
   const canLoadMore = usedProductIds.size < allProducts.length;
+  const remainingProducts = allProducts.length - usedProductIds.size;
 
   // تابع برای ایجاد 7 آیتم (6 محصول + 1 دکمه) - بدون تکرار
   const createScrollData = (products) => {
@@ -99,8 +83,16 @@ const Home = () => {
               onClick={handleLoadMore}
               className="px-8 py-3 bg-amber-500 dark:bg-amber-600 text-white font-bold rounded-lg hover:bg-amber-600 dark:hover:bg-amber-700 hover:shadow-lg hover:shadow-amber-300/40 dark:hover:shadow-amber-500/30 transition-all duration-200"
             >
-              مشاهده ادامه محصولات
+              مشاهده ادامه محصولات ({remainingProducts} محصول باقی مانده)
             </button>
+          </div>
+        )}
+
+        {!canLoadMore && displayedProducts.length > 0 && (
+          <div className="text-center mt-8 p-6 bg-amber-50 dark:bg-gray-800 rounded-xl">
+            <p className="text-amber-600 dark:text-amber-400 font-bold text-lg">
+              🎉 تمام {allProducts.length} محصول نمایش داده شدند!
+            </p>
           </div>
         )}
       </section>
