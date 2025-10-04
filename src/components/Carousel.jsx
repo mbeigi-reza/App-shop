@@ -39,7 +39,7 @@ const Carousel = () => {
            اسپرت لند
           </span>
         </h1>
-        <p className="text-xl md:text-2xl text-black dark:text-gray-400 drop-shadow-md">
+        <p className="text-xl md:text-2xl text-white drop-shadow-md">
           بهترین انتخاب برای سبک زندگی شما
         </p>
       </div>

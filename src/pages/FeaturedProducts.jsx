@@ -4,6 +4,7 @@ import ProductCard from "../components/ProductCard";
 import PriceFilter from "../components/PriceFilter";
 import usePriceFilter from "../hooks/usePriceFilter";
 import { getRandomProducts } from "../data/allProducts";
+import AutoScrollToProducts from "../components/AutoScrollToProducts";
 
 const FeaturedProducts = () => {
   const [products, setProducts] = useState([]);
@@ -86,86 +87,88 @@ const FeaturedProducts = () => {
             />
           </div>
 
-          {/* محتوای اصلی */}
-          <div className="flex-1">
-            {/* شبکه محصولات */}
-            <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-2 xl:grid-cols-4 gap-6">
-              {currentProducts.map((product) => (
-                <ProductCard
-                  key={product.id}
-                  id={product.id}
-                  title={product.title}
-                  price={product.price}
-                  imgSrc={product.imgSrc}
-                />
-              ))}
-            </div>
+          {/* محتوای اصلی - با AutoScrollToProducts包裹 شده */}
+          <AutoScrollToProducts offset={100}>
+            <div className="flex-1">
+              {/* شبکه محصولات */}
+              <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-2 xl:grid-cols-4 gap-6">
+                {currentProducts.map((product) => (
+                  <ProductCard
+                    key={product.id}
+                    id={product.id}
+                    title={product.title}
+                    price={product.price}
+                    imgSrc={product.imgSrc}
+                  />
+                ))}
+              </div>
 
-            {/* صفحه‌بندی */}
-            {filteredProducts.length > 0 && (
-              <div className="flex justify-center items-center gap-2 mt-12">
-                {/* دکمه قبلی */}
-                <button 
-                  onClick={() => currentPage > 1 && paginate(currentPage - 1)}
-                  disabled={currentPage === 1}
-                  className={`px-4 py-2 rounded-lg font-medium transition-colors ${
-                    currentPage === 1 
-                      ? "bg-gray-300 dark:bg-gray-600 text-gray-500 cursor-not-allowed" 
-                      : "bg-white dark:bg-gray-800 border border-amber-300 dark:border-amber-600 text-amber-600 dark:text-amber-400 hover:bg-amber-50 dark:hover:bg-gray-700"
-                  }`}
-                >
-                  ‹ قبلی
-                </button>
-
-                {/* شماره صفحات */}
-                {Array.from({ length: totalPages }, (_, i) => i + 1).map((page) => (
-                  <button
-                    key={page}
-                    onClick={() => paginate(page)}
+              {/* صفحه‌بندی */}
+              {filteredProducts.length > 0 && (
+                <div className="flex justify-center items-center gap-2 mt-12">
+                  {/* دکمه قبلی */}
+                  <button 
+                    onClick={() => currentPage > 1 && paginate(currentPage - 1)}
+                    disabled={currentPage === 1}
                     className={`px-4 py-2 rounded-lg font-medium transition-colors ${
-                      currentPage === page
-                        ? "bg-amber-500 dark:bg-amber-600 text-white"
+                      currentPage === 1 
+                        ? "bg-gray-300 dark:bg-gray-600 text-gray-500 cursor-not-allowed" 
                         : "bg-white dark:bg-gray-800 border border-amber-300 dark:border-amber-600 text-amber-600 dark:text-amber-400 hover:bg-amber-50 dark:hover:bg-gray-700"
                     }`}
                   >
-                    {page}
+                    ‹ قبلی
                   </button>
-                ))}
 
-                {/* دکمه بعدی */}
-                <button 
-                  onClick={() => currentPage < totalPages && paginate(currentPage + 1)}
-                  disabled={currentPage === totalPages}
-                  className={`px-4 py-2 rounded-lg font-medium transition-colors ${
-                    currentPage === totalPages 
-                      ? "bg-gray-300 dark:bg-gray-600 text-gray-500 cursor-not-allowed" 
-                      : "bg-white dark:bg-gray-800 border border-amber-300 dark:border-amber-600 text-amber-600 dark:text-amber-400 hover:bg-amber-50 dark:hover:bg-gray-700"
-                  }`}
-                >
-                  بعدی ›
-                </button>
-              </div>
-            )}
+                  {/* شماره صفحات */}
+                  {Array.from({ length: totalPages }, (_, i) => i + 1).map((page) => (
+                    <button
+                      key={page}
+                      onClick={() => paginate(page)}
+                      className={`px-4 py-2 rounded-lg font-medium transition-colors ${
+                        currentPage === page
+                          ? "bg-amber-500 dark:bg-amber-600 text-white"
+                          : "bg-white dark:bg-gray-800 border border-amber-300 dark:border-amber-600 text-amber-600 dark:text-amber-400 hover:bg-amber-50 dark:hover:bg-gray-700"
+                      }`}
+                    >
+                      {page}
+                    </button>
+                  ))}
 
-            {/* پیام عدم وجود محصول */}
-            {filteredProducts.length === 0 && (
-              <div className="text-center py-12">
-                <div className="text-6xl mb-4">😔</div>
-                <h3 className="text-xl font-bold text-gray-600 dark:text-gray-400 mb-2">
-                  محصولی یافت نشد
-                </h3>
-                <p className="text-gray-500 dark:text-gray-500">
-                  هیچ محصولی با فیلترهای انتخاب شده مطابقت ندارد
-                </p>
-                <button
-                  onClick={clearFilters}
-                  className="mt-4 px-6 py-2 bg-amber-500 dark:bg-amber-600 text-white rounded-lg hover:bg-amber-600 dark:hover:bg-amber-700 transition-colors"
-                >
-                  حذف فیلترها
-                </button>
-              </div>
-            )}
-          </div>
+                  {/* دکمه بعدی */}
+                  <button 
+                    onClick={() => currentPage < totalPages && paginate(currentPage + 1)}
+                    disabled={currentPage === totalPages}
+                    className={`px-4 py-2 rounded-lg font-medium transition-colors ${
+                      currentPage === totalPages 
+                        ? "bg-gray-300 dark:bg-gray-600 text-gray-500 cursor-not-allowed" 
+                        : "bg-white dark:bg-gray-800 border border-amber-300 dark:border-amber-600 text-amber-600 dark:text-amber-400 hover:bg-amber-50 dark:hover:bg-gray-700"
+                    }`}
+                  >
+                    بعدی ›
+                  </button>
+                </div>
+              )}
+
+              {/* پیام عدم وجود محصول */}
+              {filteredProducts.length === 0 && (
+                <div className="text-center py-12">
+                  <div className="text-6xl mb-4">😔</div>
+                  <h3 className="text-xl font-bold text-gray-600 dark:text-gray-400 mb-2">
+                    محصولی یافت نشد
+                  </h3>
+                  <p className="text-gray-500 dark:text-gray-500">
+                    هیچ محصولی با فیلترهای انتخاب شده مطابقت ندارد
+                  </p>
+                  <button
+                    onClick={clearFilters}
+                    className="mt-4 px-6 py-2 bg-amber-500 dark:bg-amber-600 text-white rounded-lg hover:bg-amber-600 dark:hover:bg-amber-700 transition-colors"
+                  >
+                    حذف فیلترها
+                  </button>
+                </div>
+              )}
+            </div>
+          </AutoScrollToProducts>
         </div>
       </div>
     </div>
