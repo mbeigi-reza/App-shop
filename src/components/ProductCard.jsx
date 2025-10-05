@@ -43,7 +43,7 @@ const ProductCard = ({ id, title, price, imgSrc }) => {
         <div className="flex gap-1 sm:gap-2 lg:gap-3 mt-auto">
           <button
             onClick={() => navigate(`/product/${id}`)}
-            className="flex-1 px-1 sm:px-2 lg:px-3 lg:text-xl xl:px-4 xl:text-xl py-1.5 sm:py-2 lg:py-2.5 bg-gray-800 dark:bg-gray-700 text-amber-400 dark:text-amber-300 rounded sm:rounded-lg hover:scale-105 transition-all duration-200 hover:bg-gray-700 dark:hover:bg-gray-600 hover:shadow-lg hover:shadow-amber-200/30 dark:hover:shadow-amber-400/20 font-medium text-xs sm:text-sm"
+            className="flex-1 px-1 sm:px-2 lg:px-3 lg:text-xl xl:px-3 xl:text-base py-1.5 sm:py-2 lg:py-2.5 bg-gray-800 dark:bg-gray-700 text-amber-400 dark:text-amber-300 rounded sm:rounded-lg hover:scale-105 transition-all duration-200 hover:bg-gray-700 dark:hover:bg-gray-600 hover:shadow-lg hover:shadow-amber-200/30 dark:hover:shadow-amber-400/20 font-medium text-xs sm:text-sm"
           >
            مشاهده
           </button>
